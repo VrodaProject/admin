@@ -1,0 +1,87 @@
+{
+  "name": "admin",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@cloudinary/react": "^1.11.2",
+    "@cloudinary/url-gen": "^1.12.0",
+    "@craco/craco": "^7.1.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.14",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^13.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.13",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "axios": "^1.6.0",
+    "graphql": "^16.8.1",
+    "luxon": "^3.4.4",
+    "ra-data-hasura": "^0.6.0",
+    "ra-i18n-polyglot": "^4.15.2",
+    "ra-language-ukrainian": "^2.2.0",
+    "react": "^18.2.0",
+    "react-admin": "^4.15.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.43.9",
+    "react-onesignal": "^2.0.4",
+    "react-scripts": "5.0.1",
+    "recharts": "^2.10.3",
+    "typescript": "^4.4.2",
+    "web-vitals": "^2.1.0"
+  },
+  "scripts": {
+    "start": "craco start --browser chrome",
+    "build": "craco build",
+    "test": "craco test",
+    "codegen": "graphql-codegen --config codegen.yml",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest",
+      "plugin:storybook/recommended"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@apollo/client": "^3.8.6",
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/typescript": "^4.0.1",
+    "@graphql-codegen/typescript-operations": "^4.0.1",
+    "@graphql-codegen/typescript-react-apollo": "^4.1.0",
+    "@storybook/addon-essentials": "7.5.2",
+    "@storybook/addon-interactions": "7.5.2",
+    "@storybook/addon-links": "7.5.2",
+    "@storybook/addon-onboarding": "1.0.8",
+    "@storybook/blocks": "7.5.2",
+    "@storybook/preset-create-react-app": "7.5.2",
+    "@storybook/react": "7.5.2",
+    "@storybook/react-webpack5": "7.5.2",
+    "@storybook/testing-library": "0.2.2",
+    "@types/luxon": "^3.3.7",
+    "babel-plugin-named-exports-order": "0.0.2",
+    "eslint-plugin-storybook": "^0.6.15",
+    "graphql-tag": "^2.12.6",
+    "prop-types": "15.8.1",
+    "react-app-alias": "^2.2.2",
+    "storybook": "^7.5.2",
+    "tsconfig-paths-webpack-plugin": "^4.1.0",
+    "webpack": "5.89.0"
+  }
+}
