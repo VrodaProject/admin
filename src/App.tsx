@@ -34,7 +34,7 @@ export const App = () => {
   }, []);
 
   useEffect(() => {
-    OneSignalReact.init({ appId: `${config.oneSignalAppId}` });
+    OneSignalReact.init({ appId: config.oneSignalAppId });
   }, []);
 
   if (!dataProvider) {
