@@ -16,6 +16,7 @@ import OneSignalReact from "react-onesignal";
 import { personnelResource } from "./modules/personnel/personnel.resource";
 import { PriceListResource } from "./modules/price_list/price-list.resource";
 import { servicesResource } from "./modules/services/services.resource";
+import { config } from "./core/config";
 
 export const App = () => {
   const [dataProvider, setDataProvider] = useState<DataProvider<string> | null>(
@@ -33,7 +34,7 @@ export const App = () => {
   }, []);
 
   useEffect(() => {
-    OneSignalReact.init({ appId: "04d6b747-335e-439f-b45c-34dba283f8f1" });
+    OneSignalReact.init({ appId: `${config.oneSignalAppId}` });
   }, []);
 
   if (!dataProvider) {
