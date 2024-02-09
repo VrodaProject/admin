@@ -34,7 +34,7 @@ export const App = () => {
   }, []);
 
   useEffect(() => {
-    OneSignalReact.init({ appId: config.oneSignalAppId });
+    OneSignalReact.init({ appId: "83b764ee-1bd9-4bb0-b98e-5194def59102" });
   }, []);
 
   if (!dataProvider) {
