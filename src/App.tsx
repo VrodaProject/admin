@@ -16,6 +16,7 @@ import OneSignalReact from "react-onesignal";
 import { personnelResource } from "./modules/personnel/personnel.resource";
 import { PriceListResource } from "./modules/price_list/price-list.resource";
 import { servicesResource } from "./modules/services/services.resource";
+import { formServicesResource } from "./modules/form_services/form-services.resource";
 import { config } from "./core/config";
 
 export const App = () => {
@@ -59,6 +60,7 @@ export const App = () => {
         <Resource {...servicesResource} />
         <Resource {...orderResource} />
         <Resource {...customerResource} />
+        <Resource {...formServicesResource} />
 
         <Resource name="order_status" />
         <Resource name="orders_products" />
