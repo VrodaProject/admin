@@ -18,6 +18,7 @@ import { PriceListResource } from "./modules/price_list/price-list.resource";
 import { servicesResource } from "./modules/services/services.resource";
 import { formServicesResource } from "./modules/form_services/form-services.resource";
 import { config } from "./core/config";
+import { mainServicesResource } from "./modules/main_services/main-services.resource";
 
 export const App = () => {
   const [dataProvider, setDataProvider] = useState<DataProvider<string> | null>(
@@ -61,6 +62,7 @@ export const App = () => {
         <Resource {...orderResource} />
         <Resource {...customerResource} />
         <Resource {...formServicesResource} />
+        <Resource {...mainServicesResource} />
 
         <Resource name="order_status" />
         <Resource name="orders_products" />

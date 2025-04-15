@@ -7,25 +7,24 @@ import {
   Skeleton,
   Typography,
 } from "@mui/material";
-import { AdvancedImage } from "@cloudinary/react";
+import { AdvancedImage, AdvancedVideo } from "@cloudinary/react";
 import { FC, useRef } from "react";
 import { cloudinary } from "@app/core/cloudinary";
 
 interface CloudinaryInputUIProps {
   label: string;
-  // label: string;
-  onImageSelected: (image: File) => void;
+  onMediaSelected: (file: File) => void;
   disabled: boolean;
   value?: string;
-  fitImage?: boolean;
+  fitMedia?: boolean;
 }
 
 export const CloudinaryInputUI: FC<CloudinaryInputUIProps> = ({
   label,
   value,
   disabled,
-  onImageSelected,
-  fitImage,
+  onMediaSelected,
+  fitMedia,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -33,27 +32,50 @@ export const CloudinaryInputUI: FC<CloudinaryInputUIProps> = ({
     inputRef.current?.click();
   };
 
-  const image = cloudinary.image(value);
+  let mediaData: { public_id: string; resource_type: string } | null = null;
+  try {
+    if (value) {
+      mediaData = JSON.parse(value);
+    }
+  } catch (e) {
+    mediaData = null;
+  }
+
+  let mediaElement = null;
   const transformations = ["w_384", "h_240", "dpr_2.0"];
-  if (fitImage) {
+  if (fitMedia) {
     transformations.push("c_pad");
   }
-  image.addTransformation(transformations.join(","));
+
+  if (mediaData && mediaData.public_id) {
+    if (mediaData.resource_type === "video") {
+      const video = cloudinary.video(mediaData.public_id);
+      video.addTransformation(transformations.join(","));
+      mediaElement = (
+        <AdvancedVideo cldVid={video} controls style={{ width: 384, height: 240 }} />
+      );
+    } else {
+      const image = cloudinary.image(mediaData.public_id);
+      image.addTransformation(transformations.join(","));
+      mediaElement = (
+        <AdvancedImage cldImg={image} width={384} height={240} />
+      );
+    }
+  }
 
   const onFileInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     if (!e.target.files) {
       return;
     }
     const [file] = Array.from(e.target.files);
-
-    onImageSelected(file);
+    onMediaSelected(file);
   };
 
   return (
     <div style={{ marginBottom: 20 }}>
       <input
         type="file"
-        accept="image/*"
+        accept="image/*,video/*"
         style={{ display: "none" }}
         ref={inputRef}
         onChange={onFileInputChange}
@@ -62,8 +84,8 @@ export const CloudinaryInputUI: FC<CloudinaryInputUIProps> = ({
         <CardHeader title={label} />
         <CardContent>
           <CardContent>
-            {value ? (
-              <AdvancedImage cldImg={image} width={384} height={240} />
+            {mediaElement ? (
+              mediaElement
             ) : (
               <Skeleton
                 variant="rectangular"
