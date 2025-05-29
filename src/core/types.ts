@@ -154,9 +154,9 @@ export type Admin_Bool_Exp = {
 
 /** unique or primary key constraints on table "admin" */
 export enum Admin_Constraint {
-  /** unique or primary key constraint on columns "id" */
+  /** unique or primary key constraint */
   AdminPkey = 'admin_pkey',
-  /** unique or primary key constraint on columns "username" */
+  /** unique or primary key constraint */
   AdminUsernameKey = 'admin_username_key'
 }
 
@@ -192,7 +192,7 @@ export type Admin_Mutation_Response = {
   returning: Array<Admin>;
 };
 
-/** on_conflict condition type for table "admin" */
+/** on conflict condition type for table "admin" */
 export type Admin_On_Conflict = {
   constraint: Admin_Constraint;
   update_columns?: Array<Admin_Update_Column>;
@@ -228,21 +228,6 @@ export type Admin_Set_Input = {
   username?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Streaming cursor of the table "admin" */
-export type Admin_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Admin_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Admin_Stream_Cursor_Value_Input = {
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  password?: InputMaybe<Scalars['String']['input']>;
-  username?: InputMaybe<Scalars['String']['input']>;
-};
-
 /** update columns of table "admin" */
 export enum Admin_Update_Column {
   /** column name */
@@ -252,13 +237,6 @@ export enum Admin_Update_Column {
   /** column name */
   Username = 'username'
 }
-
-export type Admin_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Admin_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Admin_Bool_Exp;
-};
 
 /** columns and relationships of "advantages" */
 export type Advantages = {
@@ -302,7 +280,7 @@ export type Advantages_Bool_Exp = {
 
 /** unique or primary key constraints on table "advantages" */
 export enum Advantages_Constraint {
-  /** unique or primary key constraint on columns "id" */
+  /** unique or primary key constraint */
   AdvantagesPkey = 'advantages_pkey'
 }
 
@@ -338,7 +316,7 @@ export type Advantages_Mutation_Response = {
   returning: Array<Advantages>;
 };
 
-/** on_conflict condition type for table "advantages" */
+/** on conflict condition type for table "advantages" */
 export type Advantages_On_Conflict = {
   constraint: Advantages_Constraint;
   update_columns?: Array<Advantages_Update_Column>;
@@ -374,21 +352,6 @@ export type Advantages_Set_Input = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Streaming cursor of the table "advantages" */
-export type Advantages_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Advantages_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Advantages_Stream_Cursor_Value_Input = {
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  label?: InputMaybe<Scalars['String']['input']>;
-  title?: InputMaybe<Scalars['String']['input']>;
-};
-
 /** update columns of table "advantages" */
 export enum Advantages_Update_Column {
   /** column name */
@@ -398,13 +361,6 @@ export enum Advantages_Update_Column {
   /** column name */
   Title = 'title'
 }
-
-export type Advantages_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Advantages_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Advantages_Bool_Exp;
-};
 
 /** Boolean expression to compare columns of type "bigint". All fields are combined with logical 'AND'. */
 export type Bigint_Comparison_Exp = {
@@ -434,13 +390,27 @@ export type CreateOrderOutput = {
   id: Scalars['String']['output'];
 };
 
-/** ordering argument of a cursor */
-export enum Cursor_Ordering {
-  /** ascending ordering of the cursor */
-  Asc = 'ASC',
-  /** descending ordering of the cursor */
-  Desc = 'DESC'
-}
+export type CustomerLoginPasswordInput = {
+  password: Scalars['String']['input'];
+  phone: Scalars['String']['input'];
+};
+
+export type CustomerLoginPasswordOutput = {
+  __typename?: 'customerLoginPasswordOutput';
+  accessToken: Scalars['String']['output'];
+};
+
+export type CustomerRegisterInput = {
+  address: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  phone: Scalars['String']['input'];
+};
+
+export type CustomerRegisterOutput = {
+  __typename?: 'customerRegisterOutput';
+  accessToken: Scalars['String']['output'];
+};
 
 export type CustomerVerifyCodeInput = {
   code: Scalars['String']['input'];
@@ -458,10 +428,11 @@ export type Customers = {
   address?: Maybe<Scalars['String']['output']>;
   id: Scalars['uuid']['output'];
   name?: Maybe<Scalars['String']['output']>;
-  /** An array relationship */
+  /** fetch data from the table: "orders" */
   orders: Array<Orders>;
   /** An aggregate relationship */
   orders_aggregate: Orders_Aggregate;
+  password?: Maybe<Scalars['String']['output']>;
   phone: Scalars['String']['output'];
   twilioVerificationSid?: Maybe<Scalars['String']['output']>;
 };
@@ -517,16 +488,16 @@ export type Customers_Bool_Exp = {
   id?: InputMaybe<Uuid_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
   orders?: InputMaybe<Orders_Bool_Exp>;
-  orders_aggregate?: InputMaybe<Orders_Aggregate_Bool_Exp>;
+  password?: InputMaybe<String_Comparison_Exp>;
   phone?: InputMaybe<String_Comparison_Exp>;
   twilioVerificationSid?: InputMaybe<String_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "customers" */
 export enum Customers_Constraint {
-  /** unique or primary key constraint on columns "phone" */
+  /** unique or primary key constraint */
   CustomersPhoneKey = 'customers_phone_key',
-  /** unique or primary key constraint on columns "id" */
+  /** unique or primary key constraint */
   CustomersPkey = 'customers_pkey'
 }
 
@@ -536,6 +507,7 @@ export type Customers_Insert_Input = {
   id?: InputMaybe<Scalars['uuid']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   orders?: InputMaybe<Orders_Arr_Rel_Insert_Input>;
+  password?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
   twilioVerificationSid?: InputMaybe<Scalars['String']['input']>;
 };
@@ -546,6 +518,7 @@ export type Customers_Max_Fields = {
   address?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+  password?: Maybe<Scalars['String']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
   twilioVerificationSid?: Maybe<Scalars['String']['output']>;
 };
@@ -556,6 +529,7 @@ export type Customers_Min_Fields = {
   address?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+  password?: Maybe<Scalars['String']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
   twilioVerificationSid?: Maybe<Scalars['String']['output']>;
 };
@@ -572,11 +546,11 @@ export type Customers_Mutation_Response = {
 /** input type for inserting object relation for remote table "customers" */
 export type Customers_Obj_Rel_Insert_Input = {
   data: Customers_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: InputMaybe<Customers_On_Conflict>;
 };
 
-/** on_conflict condition type for table "customers" */
+/** on conflict condition type for table "customers" */
 export type Customers_On_Conflict = {
   constraint: Customers_Constraint;
   update_columns?: Array<Customers_Update_Column>;
@@ -589,6 +563,7 @@ export type Customers_Order_By = {
   id?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
   orders_aggregate?: InputMaybe<Orders_Aggregate_Order_By>;
+  password?: InputMaybe<Order_By>;
   phone?: InputMaybe<Order_By>;
   twilioVerificationSid?: InputMaybe<Order_By>;
 };
@@ -607,6 +582,8 @@ export enum Customers_Select_Column {
   /** column name */
   Name = 'name',
   /** column name */
+  Password = 'password',
+  /** column name */
   Phone = 'phone',
   /** column name */
   TwilioVerificationSid = 'twilioVerificationSid'
@@ -617,23 +594,7 @@ export type Customers_Set_Input = {
   address?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
-  phone?: InputMaybe<Scalars['String']['input']>;
-  twilioVerificationSid?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** Streaming cursor of the table "customers" */
-export type Customers_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Customers_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Customers_Stream_Cursor_Value_Input = {
-  address?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   phone?: InputMaybe<Scalars['String']['input']>;
   twilioVerificationSid?: InputMaybe<Scalars['String']['input']>;
 };
@@ -647,17 +608,12 @@ export enum Customers_Update_Column {
   /** column name */
   Name = 'name',
   /** column name */
+  Password = 'password',
+  /** column name */
   Phone = 'phone',
   /** column name */
   TwilioVerificationSid = 'twilioVerificationSid'
 }
-
-export type Customers_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Customers_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Customers_Bool_Exp;
-};
 
 /** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
 export type Date_Comparison_Exp = {
@@ -671,6 +627,119 @@ export type Date_Comparison_Exp = {
   _neq?: InputMaybe<Scalars['date']['input']>;
   _nin?: InputMaybe<Array<Scalars['date']['input']>>;
 };
+
+/** columns and relationships of "form_services" */
+export type Form_Services = {
+  __typename?: 'form_services';
+  form_service_name: Scalars['String']['output'];
+  id: Scalars['uuid']['output'];
+};
+
+/** aggregated selection of "form_services" */
+export type Form_Services_Aggregate = {
+  __typename?: 'form_services_aggregate';
+  aggregate?: Maybe<Form_Services_Aggregate_Fields>;
+  nodes: Array<Form_Services>;
+};
+
+/** aggregate fields of "form_services" */
+export type Form_Services_Aggregate_Fields = {
+  __typename?: 'form_services_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Form_Services_Max_Fields>;
+  min?: Maybe<Form_Services_Min_Fields>;
+};
+
+
+/** aggregate fields of "form_services" */
+export type Form_Services_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Form_Services_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "form_services". All fields are combined with a logical 'AND'. */
+export type Form_Services_Bool_Exp = {
+  _and?: InputMaybe<Array<Form_Services_Bool_Exp>>;
+  _not?: InputMaybe<Form_Services_Bool_Exp>;
+  _or?: InputMaybe<Array<Form_Services_Bool_Exp>>;
+  form_service_name?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "form_services" */
+export enum Form_Services_Constraint {
+  /** unique or primary key constraint */
+  FormServicesPkey = 'form_services_pkey'
+}
+
+/** input type for inserting data into table "form_services" */
+export type Form_Services_Insert_Input = {
+  form_service_name?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate max on columns */
+export type Form_Services_Max_Fields = {
+  __typename?: 'form_services_max_fields';
+  form_service_name?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** aggregate min on columns */
+export type Form_Services_Min_Fields = {
+  __typename?: 'form_services_min_fields';
+  form_service_name?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** response of any mutation on the table "form_services" */
+export type Form_Services_Mutation_Response = {
+  __typename?: 'form_services_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Form_Services>;
+};
+
+/** on conflict condition type for table "form_services" */
+export type Form_Services_On_Conflict = {
+  constraint: Form_Services_Constraint;
+  update_columns?: Array<Form_Services_Update_Column>;
+  where?: InputMaybe<Form_Services_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "form_services". */
+export type Form_Services_Order_By = {
+  form_service_name?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: form_services */
+export type Form_Services_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "form_services" */
+export enum Form_Services_Select_Column {
+  /** column name */
+  FormServiceName = 'form_service_name',
+  /** column name */
+  Id = 'id'
+}
+
+/** input type for updating data in table "form_services" */
+export type Form_Services_Set_Input = {
+  form_service_name?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** update columns of table "form_services" */
+export enum Form_Services_Update_Column {
+  /** column name */
+  FormServiceName = 'form_service_name',
+  /** column name */
+  Id = 'id'
+}
 
 /** columns and relationships of "last_week_orders" */
 export type Last_Week_Orders = {
@@ -781,21 +850,6 @@ export type Last_Week_Orders_Stddev_Samp_Fields = {
   sum?: Maybe<Scalars['Float']['output']>;
 };
 
-/** Streaming cursor of the table "last_week_orders" */
-export type Last_Week_Orders_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Last_Week_Orders_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Last_Week_Orders_Stream_Cursor_Value_Input = {
-  count?: InputMaybe<Scalars['bigint']['input']>;
-  date?: InputMaybe<Scalars['date']['input']>;
-  sum?: InputMaybe<Scalars['numeric']['input']>;
-};
-
 /** aggregate sum on columns */
 export type Last_Week_Orders_Sum_Fields = {
   __typename?: 'last_week_orders_sum_fields';
@@ -824,12 +878,148 @@ export type Last_Week_Orders_Variance_Fields = {
   sum?: Maybe<Scalars['Float']['output']>;
 };
 
+/** columns and relationships of "main_services" */
+export type Main_Services = {
+  __typename?: 'main_services';
+  id: Scalars['uuid']['output'];
+  media: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  price: Scalars['String']['output'];
+};
+
+/** aggregated selection of "main_services" */
+export type Main_Services_Aggregate = {
+  __typename?: 'main_services_aggregate';
+  aggregate?: Maybe<Main_Services_Aggregate_Fields>;
+  nodes: Array<Main_Services>;
+};
+
+/** aggregate fields of "main_services" */
+export type Main_Services_Aggregate_Fields = {
+  __typename?: 'main_services_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Main_Services_Max_Fields>;
+  min?: Maybe<Main_Services_Min_Fields>;
+};
+
+
+/** aggregate fields of "main_services" */
+export type Main_Services_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Main_Services_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "main_services". All fields are combined with a logical 'AND'. */
+export type Main_Services_Bool_Exp = {
+  _and?: InputMaybe<Array<Main_Services_Bool_Exp>>;
+  _not?: InputMaybe<Main_Services_Bool_Exp>;
+  _or?: InputMaybe<Array<Main_Services_Bool_Exp>>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  media?: InputMaybe<String_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  price?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "main_services" */
+export enum Main_Services_Constraint {
+  /** unique or primary key constraint */
+  MainServicesPkey = 'main_services_pkey'
+}
+
+/** input type for inserting data into table "main_services" */
+export type Main_Services_Insert_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  media?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  price?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Main_Services_Max_Fields = {
+  __typename?: 'main_services_max_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  media?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  price?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Main_Services_Min_Fields = {
+  __typename?: 'main_services_min_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  media?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  price?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "main_services" */
+export type Main_Services_Mutation_Response = {
+  __typename?: 'main_services_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Main_Services>;
+};
+
+/** on conflict condition type for table "main_services" */
+export type Main_Services_On_Conflict = {
+  constraint: Main_Services_Constraint;
+  update_columns?: Array<Main_Services_Update_Column>;
+  where?: InputMaybe<Main_Services_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "main_services". */
+export type Main_Services_Order_By = {
+  id?: InputMaybe<Order_By>;
+  media?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  price?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: main_services */
+export type Main_Services_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "main_services" */
+export enum Main_Services_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Media = 'media',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  Price = 'price'
+}
+
+/** input type for updating data in table "main_services" */
+export type Main_Services_Set_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  media?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  price?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "main_services" */
+export enum Main_Services_Update_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Media = 'media',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  Price = 'price'
+}
+
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
   /** Admin registration */
   adminRegister?: Maybe<AdminRegisterOutput>;
   createOrder?: Maybe<CreateOrderOutput>;
+  customerRegister?: Maybe<CustomerRegisterOutput>;
   /** delete data from the table: "admin" */
   delete_admin?: Maybe<Admin_Mutation_Response>;
   /** delete single row from the table: "admin" */
@@ -842,6 +1032,14 @@ export type Mutation_Root = {
   delete_customers?: Maybe<Customers_Mutation_Response>;
   /** delete single row from the table: "customers" */
   delete_customers_by_pk?: Maybe<Customers>;
+  /** delete data from the table: "form_services" */
+  delete_form_services?: Maybe<Form_Services_Mutation_Response>;
+  /** delete single row from the table: "form_services" */
+  delete_form_services_by_pk?: Maybe<Form_Services>;
+  /** delete data from the table: "main_services" */
+  delete_main_services?: Maybe<Main_Services_Mutation_Response>;
+  /** delete single row from the table: "main_services" */
+  delete_main_services_by_pk?: Maybe<Main_Services>;
   /** delete data from the table: "order_status" */
   delete_order_status?: Maybe<Order_Status_Mutation_Response>;
   /** delete single row from the table: "order_status" */
@@ -886,6 +1084,22 @@ export type Mutation_Root = {
   delete_products_categories?: Maybe<Products_Categories_Mutation_Response>;
   /** delete single row from the table: "products_categories" */
   delete_products_categories_by_pk?: Maybe<Products_Categories>;
+  /** delete data from the table: "service_categories" */
+  delete_service_categories?: Maybe<Service_Categories_Mutation_Response>;
+  /** delete single row from the table: "service_categories" */
+  delete_service_categories_by_pk?: Maybe<Service_Categories>;
+  /** delete data from the table: "service_sections" */
+  delete_service_sections?: Maybe<Service_Sections_Mutation_Response>;
+  /** delete single row from the table: "service_sections" */
+  delete_service_sections_by_pk?: Maybe<Service_Sections>;
+  /** delete data from the table: "service_subcategories" */
+  delete_service_subcategories?: Maybe<Service_Subcategories_Mutation_Response>;
+  /** delete single row from the table: "service_subcategories" */
+  delete_service_subcategories_by_pk?: Maybe<Service_Subcategories>;
+  /** delete data from the table: "services" */
+  delete_services?: Maybe<Services_Mutation_Response>;
+  /** delete single row from the table: "services" */
+  delete_services_by_pk?: Maybe<Services>;
   /** insert data into the table: "admin" */
   insert_admin?: Maybe<Admin_Mutation_Response>;
   /** insert a single row into the table: "admin" */
@@ -898,6 +1112,14 @@ export type Mutation_Root = {
   insert_customers?: Maybe<Customers_Mutation_Response>;
   /** insert a single row into the table: "customers" */
   insert_customers_one?: Maybe<Customers>;
+  /** insert data into the table: "form_services" */
+  insert_form_services?: Maybe<Form_Services_Mutation_Response>;
+  /** insert a single row into the table: "form_services" */
+  insert_form_services_one?: Maybe<Form_Services>;
+  /** insert data into the table: "main_services" */
+  insert_main_services?: Maybe<Main_Services_Mutation_Response>;
+  /** insert a single row into the table: "main_services" */
+  insert_main_services_one?: Maybe<Main_Services>;
   /** insert data into the table: "order_status" */
   insert_order_status?: Maybe<Order_Status_Mutation_Response>;
   /** insert a single row into the table: "order_status" */
@@ -942,54 +1164,62 @@ export type Mutation_Root = {
   insert_products_categories_one?: Maybe<Products_Categories>;
   /** insert a single row into the table: "products" */
   insert_products_one?: Maybe<Products>;
+  /** insert data into the table: "service_categories" */
+  insert_service_categories?: Maybe<Service_Categories_Mutation_Response>;
+  /** insert a single row into the table: "service_categories" */
+  insert_service_categories_one?: Maybe<Service_Categories>;
+  /** insert data into the table: "service_sections" */
+  insert_service_sections?: Maybe<Service_Sections_Mutation_Response>;
+  /** insert a single row into the table: "service_sections" */
+  insert_service_sections_one?: Maybe<Service_Sections>;
+  /** insert data into the table: "service_subcategories" */
+  insert_service_subcategories?: Maybe<Service_Subcategories_Mutation_Response>;
+  /** insert a single row into the table: "service_subcategories" */
+  insert_service_subcategories_one?: Maybe<Service_Subcategories>;
+  /** insert data into the table: "services" */
+  insert_services?: Maybe<Services_Mutation_Response>;
+  /** insert a single row into the table: "services" */
+  insert_services_one?: Maybe<Services>;
   /** update data of the table: "admin" */
   update_admin?: Maybe<Admin_Mutation_Response>;
   /** update single row of the table: "admin" */
   update_admin_by_pk?: Maybe<Admin>;
-  /** update multiples rows of table: "admin" */
-  update_admin_many?: Maybe<Array<Maybe<Admin_Mutation_Response>>>;
   /** update data of the table: "advantages" */
   update_advantages?: Maybe<Advantages_Mutation_Response>;
   /** update single row of the table: "advantages" */
   update_advantages_by_pk?: Maybe<Advantages>;
-  /** update multiples rows of table: "advantages" */
-  update_advantages_many?: Maybe<Array<Maybe<Advantages_Mutation_Response>>>;
   /** update data of the table: "customers" */
   update_customers?: Maybe<Customers_Mutation_Response>;
   /** update single row of the table: "customers" */
   update_customers_by_pk?: Maybe<Customers>;
-  /** update multiples rows of table: "customers" */
-  update_customers_many?: Maybe<Array<Maybe<Customers_Mutation_Response>>>;
+  /** update data of the table: "form_services" */
+  update_form_services?: Maybe<Form_Services_Mutation_Response>;
+  /** update single row of the table: "form_services" */
+  update_form_services_by_pk?: Maybe<Form_Services>;
+  /** update data of the table: "main_services" */
+  update_main_services?: Maybe<Main_Services_Mutation_Response>;
+  /** update single row of the table: "main_services" */
+  update_main_services_by_pk?: Maybe<Main_Services>;
   /** update data of the table: "order_status" */
   update_order_status?: Maybe<Order_Status_Mutation_Response>;
   /** update single row of the table: "order_status" */
   update_order_status_by_pk?: Maybe<Order_Status>;
-  /** update multiples rows of table: "order_status" */
-  update_order_status_many?: Maybe<Array<Maybe<Order_Status_Mutation_Response>>>;
   /** update data of the table: "orders" */
   update_orders?: Maybe<Orders_Mutation_Response>;
   /** update single row of the table: "orders" */
   update_orders_by_pk?: Maybe<Orders>;
-  /** update multiples rows of table: "orders" */
-  update_orders_many?: Maybe<Array<Maybe<Orders_Mutation_Response>>>;
   /** update data of the table: "orders_products" */
   update_orders_products?: Maybe<Orders_Products_Mutation_Response>;
   /** update single row of the table: "orders_products" */
   update_orders_products_by_pk?: Maybe<Orders_Products>;
-  /** update multiples rows of table: "orders_products" */
-  update_orders_products_many?: Maybe<Array<Maybe<Orders_Products_Mutation_Response>>>;
   /** update data of the table: "payment_status" */
   update_payment_status?: Maybe<Payment_Status_Mutation_Response>;
   /** update single row of the table: "payment_status" */
   update_payment_status_by_pk?: Maybe<Payment_Status>;
-  /** update multiples rows of table: "payment_status" */
-  update_payment_status_many?: Maybe<Array<Maybe<Payment_Status_Mutation_Response>>>;
   /** update data of the table: "payment_types" */
   update_payment_types?: Maybe<Payment_Types_Mutation_Response>;
   /** update single row of the table: "payment_types" */
   update_payment_types_by_pk?: Maybe<Payment_Types>;
-  /** update multiples rows of table: "payment_types" */
-  update_payment_types_many?: Maybe<Array<Maybe<Payment_Types_Mutation_Response>>>;
   /** update data of the table: "personnel" */
   update_personnel?: Maybe<Personnel_Mutation_Response>;
   /** update single row of the table: "personnel" */
@@ -998,10 +1228,6 @@ export type Mutation_Root = {
   update_personnel_categories?: Maybe<Personnel_Categories_Mutation_Response>;
   /** update single row of the table: "personnel_categories" */
   update_personnel_categories_by_pk?: Maybe<Personnel_Categories>;
-  /** update multiples rows of table: "personnel_categories" */
-  update_personnel_categories_many?: Maybe<Array<Maybe<Personnel_Categories_Mutation_Response>>>;
-  /** update multiples rows of table: "personnel" */
-  update_personnel_many?: Maybe<Array<Maybe<Personnel_Mutation_Response>>>;
   /** update data of the table: "price_list" */
   update_price_list?: Maybe<Price_List_Mutation_Response>;
   /** update single row of the table: "price_list" */
@@ -1010,10 +1236,6 @@ export type Mutation_Root = {
   update_price_list_categories?: Maybe<Price_List_Categories_Mutation_Response>;
   /** update single row of the table: "price_list_categories" */
   update_price_list_categories_by_pk?: Maybe<Price_List_Categories>;
-  /** update multiples rows of table: "price_list_categories" */
-  update_price_list_categories_many?: Maybe<Array<Maybe<Price_List_Categories_Mutation_Response>>>;
-  /** update multiples rows of table: "price_list" */
-  update_price_list_many?: Maybe<Array<Maybe<Price_List_Mutation_Response>>>;
   /** update data of the table: "products" */
   update_products?: Maybe<Products_Mutation_Response>;
   /** update single row of the table: "products" */
@@ -1022,10 +1244,22 @@ export type Mutation_Root = {
   update_products_categories?: Maybe<Products_Categories_Mutation_Response>;
   /** update single row of the table: "products_categories" */
   update_products_categories_by_pk?: Maybe<Products_Categories>;
-  /** update multiples rows of table: "products_categories" */
-  update_products_categories_many?: Maybe<Array<Maybe<Products_Categories_Mutation_Response>>>;
-  /** update multiples rows of table: "products" */
-  update_products_many?: Maybe<Array<Maybe<Products_Mutation_Response>>>;
+  /** update data of the table: "service_categories" */
+  update_service_categories?: Maybe<Service_Categories_Mutation_Response>;
+  /** update single row of the table: "service_categories" */
+  update_service_categories_by_pk?: Maybe<Service_Categories>;
+  /** update data of the table: "service_sections" */
+  update_service_sections?: Maybe<Service_Sections_Mutation_Response>;
+  /** update single row of the table: "service_sections" */
+  update_service_sections_by_pk?: Maybe<Service_Sections>;
+  /** update data of the table: "service_subcategories" */
+  update_service_subcategories?: Maybe<Service_Subcategories_Mutation_Response>;
+  /** update single row of the table: "service_subcategories" */
+  update_service_subcategories_by_pk?: Maybe<Service_Subcategories>;
+  /** update data of the table: "services" */
+  update_services?: Maybe<Services_Mutation_Response>;
+  /** update single row of the table: "services" */
+  update_services_by_pk?: Maybe<Services>;
 };
 
 
@@ -1038,6 +1272,12 @@ export type Mutation_RootAdminRegisterArgs = {
 /** mutation root */
 export type Mutation_RootCreateOrderArgs = {
   order: CreateOrderInput;
+};
+
+
+/** mutation root */
+export type Mutation_RootCustomerRegisterArgs = {
+  customer: CustomerRegisterInput;
 };
 
 
@@ -1073,6 +1313,30 @@ export type Mutation_RootDelete_CustomersArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Customers_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Form_ServicesArgs = {
+  where: Form_Services_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Form_Services_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Main_ServicesArgs = {
+  where: Main_Services_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Main_Services_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
@@ -1210,6 +1474,54 @@ export type Mutation_RootDelete_Products_Categories_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Service_CategoriesArgs = {
+  where: Service_Categories_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Service_Categories_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Service_SectionsArgs = {
+  where: Service_Sections_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Service_Sections_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Service_SubcategoriesArgs = {
+  where: Service_Subcategories_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Service_Subcategories_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_ServicesArgs = {
+  where: Services_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Services_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_AdminArgs = {
   objects: Array<Admin_Insert_Input>;
   on_conflict?: InputMaybe<Admin_On_Conflict>;
@@ -1248,6 +1560,34 @@ export type Mutation_RootInsert_CustomersArgs = {
 export type Mutation_RootInsert_Customers_OneArgs = {
   object: Customers_Insert_Input;
   on_conflict?: InputMaybe<Customers_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Form_ServicesArgs = {
+  objects: Array<Form_Services_Insert_Input>;
+  on_conflict?: InputMaybe<Form_Services_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Form_Services_OneArgs = {
+  object: Form_Services_Insert_Input;
+  on_conflict?: InputMaybe<Form_Services_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Main_ServicesArgs = {
+  objects: Array<Main_Services_Insert_Input>;
+  on_conflict?: InputMaybe<Main_Services_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Main_Services_OneArgs = {
+  object: Main_Services_Insert_Input;
+  on_conflict?: InputMaybe<Main_Services_On_Conflict>;
 };
 
 
@@ -1406,6 +1746,62 @@ export type Mutation_RootInsert_Products_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Service_CategoriesArgs = {
+  objects: Array<Service_Categories_Insert_Input>;
+  on_conflict?: InputMaybe<Service_Categories_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Service_Categories_OneArgs = {
+  object: Service_Categories_Insert_Input;
+  on_conflict?: InputMaybe<Service_Categories_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Service_SectionsArgs = {
+  objects: Array<Service_Sections_Insert_Input>;
+  on_conflict?: InputMaybe<Service_Sections_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Service_Sections_OneArgs = {
+  object: Service_Sections_Insert_Input;
+  on_conflict?: InputMaybe<Service_Sections_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Service_SubcategoriesArgs = {
+  objects: Array<Service_Subcategories_Insert_Input>;
+  on_conflict?: InputMaybe<Service_Subcategories_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Service_Subcategories_OneArgs = {
+  object: Service_Subcategories_Insert_Input;
+  on_conflict?: InputMaybe<Service_Subcategories_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_ServicesArgs = {
+  objects: Array<Services_Insert_Input>;
+  on_conflict?: InputMaybe<Services_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Services_OneArgs = {
+  object: Services_Insert_Input;
+  on_conflict?: InputMaybe<Services_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_AdminArgs = {
   _set?: InputMaybe<Admin_Set_Input>;
   where: Admin_Bool_Exp;
@@ -1416,12 +1812,6 @@ export type Mutation_RootUpdate_AdminArgs = {
 export type Mutation_RootUpdate_Admin_By_PkArgs = {
   _set?: InputMaybe<Admin_Set_Input>;
   pk_columns: Admin_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Admin_ManyArgs = {
-  updates: Array<Admin_Updates>;
 };
 
 
@@ -1440,12 +1830,6 @@ export type Mutation_RootUpdate_Advantages_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Advantages_ManyArgs = {
-  updates: Array<Advantages_Updates>;
-};
-
-
-/** mutation root */
 export type Mutation_RootUpdate_CustomersArgs = {
   _set?: InputMaybe<Customers_Set_Input>;
   where: Customers_Bool_Exp;
@@ -1460,8 +1844,30 @@ export type Mutation_RootUpdate_Customers_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Customers_ManyArgs = {
-  updates: Array<Customers_Updates>;
+export type Mutation_RootUpdate_Form_ServicesArgs = {
+  _set?: InputMaybe<Form_Services_Set_Input>;
+  where: Form_Services_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Form_Services_By_PkArgs = {
+  _set?: InputMaybe<Form_Services_Set_Input>;
+  pk_columns: Form_Services_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Main_ServicesArgs = {
+  _set?: InputMaybe<Main_Services_Set_Input>;
+  where: Main_Services_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Main_Services_By_PkArgs = {
+  _set?: InputMaybe<Main_Services_Set_Input>;
+  pk_columns: Main_Services_Pk_Columns_Input;
 };
 
 
@@ -1476,12 +1882,6 @@ export type Mutation_RootUpdate_Order_StatusArgs = {
 export type Mutation_RootUpdate_Order_Status_By_PkArgs = {
   _set?: InputMaybe<Order_Status_Set_Input>;
   pk_columns: Order_Status_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Order_Status_ManyArgs = {
-  updates: Array<Order_Status_Updates>;
 };
 
 
@@ -1502,12 +1902,6 @@ export type Mutation_RootUpdate_Orders_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Orders_ManyArgs = {
-  updates: Array<Orders_Updates>;
-};
-
-
-/** mutation root */
 export type Mutation_RootUpdate_Orders_ProductsArgs = {
   _inc?: InputMaybe<Orders_Products_Inc_Input>;
   _set?: InputMaybe<Orders_Products_Set_Input>;
@@ -1520,12 +1914,6 @@ export type Mutation_RootUpdate_Orders_Products_By_PkArgs = {
   _inc?: InputMaybe<Orders_Products_Inc_Input>;
   _set?: InputMaybe<Orders_Products_Set_Input>;
   pk_columns: Orders_Products_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Orders_Products_ManyArgs = {
-  updates: Array<Orders_Products_Updates>;
 };
 
 
@@ -1544,12 +1932,6 @@ export type Mutation_RootUpdate_Payment_Status_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Payment_Status_ManyArgs = {
-  updates: Array<Payment_Status_Updates>;
-};
-
-
-/** mutation root */
 export type Mutation_RootUpdate_Payment_TypesArgs = {
   _set?: InputMaybe<Payment_Types_Set_Input>;
   where: Payment_Types_Bool_Exp;
@@ -1560,12 +1942,6 @@ export type Mutation_RootUpdate_Payment_TypesArgs = {
 export type Mutation_RootUpdate_Payment_Types_By_PkArgs = {
   _set?: InputMaybe<Payment_Types_Set_Input>;
   pk_columns: Payment_Types_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Payment_Types_ManyArgs = {
-  updates: Array<Payment_Types_Updates>;
 };
 
 
@@ -1594,18 +1970,6 @@ export type Mutation_RootUpdate_Personnel_CategoriesArgs = {
 export type Mutation_RootUpdate_Personnel_Categories_By_PkArgs = {
   _set?: InputMaybe<Personnel_Categories_Set_Input>;
   pk_columns: Personnel_Categories_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Personnel_Categories_ManyArgs = {
-  updates: Array<Personnel_Categories_Updates>;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Personnel_ManyArgs = {
-  updates: Array<Personnel_Updates>;
 };
 
 
@@ -1640,18 +2004,6 @@ export type Mutation_RootUpdate_Price_List_Categories_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Price_List_Categories_ManyArgs = {
-  updates: Array<Price_List_Categories_Updates>;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Price_List_ManyArgs = {
-  updates: Array<Price_List_Updates>;
-};
-
-
-/** mutation root */
 export type Mutation_RootUpdate_ProductsArgs = {
   _inc?: InputMaybe<Products_Inc_Input>;
   _set?: InputMaybe<Products_Set_Input>;
@@ -1682,14 +2034,58 @@ export type Mutation_RootUpdate_Products_Categories_By_PkArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Products_Categories_ManyArgs = {
-  updates: Array<Products_Categories_Updates>;
+export type Mutation_RootUpdate_Service_CategoriesArgs = {
+  _set?: InputMaybe<Service_Categories_Set_Input>;
+  where: Service_Categories_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Products_ManyArgs = {
-  updates: Array<Products_Updates>;
+export type Mutation_RootUpdate_Service_Categories_By_PkArgs = {
+  _set?: InputMaybe<Service_Categories_Set_Input>;
+  pk_columns: Service_Categories_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Service_SectionsArgs = {
+  _set?: InputMaybe<Service_Sections_Set_Input>;
+  where: Service_Sections_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Service_Sections_By_PkArgs = {
+  _set?: InputMaybe<Service_Sections_Set_Input>;
+  pk_columns: Service_Sections_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Service_SubcategoriesArgs = {
+  _set?: InputMaybe<Service_Subcategories_Set_Input>;
+  where: Service_Subcategories_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Service_Subcategories_By_PkArgs = {
+  _set?: InputMaybe<Service_Subcategories_Set_Input>;
+  pk_columns: Service_Subcategories_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_ServicesArgs = {
+  _set?: InputMaybe<Services_Set_Input>;
+  where: Services_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Services_By_PkArgs = {
+  _set?: InputMaybe<Services_Set_Input>;
+  pk_columns: Services_Pk_Columns_Input;
 };
 
 /** Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'. */
@@ -1726,6 +2122,30 @@ export type Order_Status = {
   __typename?: 'order_status';
   id: Scalars['String']['output'];
   label: Scalars['String']['output'];
+  /** fetch data from the table: "orders" */
+  orders: Array<Orders>;
+  /** An aggregate relationship */
+  orders_aggregate: Orders_Aggregate;
+};
+
+
+/** columns and relationships of "order_status" */
+export type Order_StatusOrdersArgs = {
+  distinct_on?: InputMaybe<Array<Orders_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Orders_Order_By>>;
+  where?: InputMaybe<Orders_Bool_Exp>;
+};
+
+
+/** columns and relationships of "order_status" */
+export type Order_StatusOrders_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Orders_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Orders_Order_By>>;
+  where?: InputMaybe<Orders_Bool_Exp>;
 };
 
 /** aggregated selection of "order_status" */
@@ -1757,11 +2177,12 @@ export type Order_Status_Bool_Exp = {
   _or?: InputMaybe<Array<Order_Status_Bool_Exp>>;
   id?: InputMaybe<String_Comparison_Exp>;
   label?: InputMaybe<String_Comparison_Exp>;
+  orders?: InputMaybe<Orders_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "order_status" */
 export enum Order_Status_Constraint {
-  /** unique or primary key constraint on columns "id" */
+  /** unique or primary key constraint */
   OrderStatusPkey = 'order_status_pkey'
 }
 
@@ -1791,6 +2212,7 @@ export type Order_Status_Enum_Comparison_Exp = {
 export type Order_Status_Insert_Input = {
   id?: InputMaybe<Scalars['String']['input']>;
   label?: InputMaybe<Scalars['String']['input']>;
+  orders?: InputMaybe<Orders_Arr_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -1816,7 +2238,14 @@ export type Order_Status_Mutation_Response = {
   returning: Array<Order_Status>;
 };
 
-/** on_conflict condition type for table "order_status" */
+/** input type for inserting object relation for remote table "order_status" */
+export type Order_Status_Obj_Rel_Insert_Input = {
+  data: Order_Status_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: InputMaybe<Order_Status_On_Conflict>;
+};
+
+/** on conflict condition type for table "order_status" */
 export type Order_Status_On_Conflict = {
   constraint: Order_Status_Constraint;
   update_columns?: Array<Order_Status_Update_Column>;
@@ -1827,6 +2256,7 @@ export type Order_Status_On_Conflict = {
 export type Order_Status_Order_By = {
   id?: InputMaybe<Order_By>;
   label?: InputMaybe<Order_By>;
+  orders_aggregate?: InputMaybe<Orders_Aggregate_Order_By>;
 };
 
 /** primary key columns input for table: order_status */
@@ -1848,20 +2278,6 @@ export type Order_Status_Set_Input = {
   label?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Streaming cursor of the table "order_status" */
-export type Order_Status_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Order_Status_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Order_Status_Stream_Cursor_Value_Input = {
-  id?: InputMaybe<Scalars['String']['input']>;
-  label?: InputMaybe<Scalars['String']['input']>;
-};
-
 /** update columns of table "order_status" */
 export enum Order_Status_Update_Column {
   /** column name */
@@ -1869,13 +2285,6 @@ export enum Order_Status_Update_Column {
   /** column name */
   Label = 'label'
 }
-
-export type Order_Status_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Order_Status_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Order_Status_Bool_Exp;
-};
 
 /** columns and relationships of "orders" */
 export type Orders = {
@@ -1892,6 +2301,12 @@ export type Orders = {
   order_items: Array<Orders_Products>;
   /** An aggregate relationship */
   order_items_aggregate: Orders_Products_Aggregate;
+  /** An object relationship */
+  order_status?: Maybe<Order_Status>;
+  /** An object relationship */
+  paymentStatusByPaymentStatus?: Maybe<Payment_Status>;
+  /** An object relationship */
+  paymentTypeByPaymentType: Payment_Types;
   payment_id?: Maybe<Scalars['Int']['output']>;
   payment_status?: Maybe<Payment_Status_Enum>;
   payment_type: Payment_Types_Enum;
@@ -1925,17 +2340,6 @@ export type Orders_Aggregate = {
   __typename?: 'orders_aggregate';
   aggregate?: Maybe<Orders_Aggregate_Fields>;
   nodes: Array<Orders>;
-};
-
-export type Orders_Aggregate_Bool_Exp = {
-  count?: InputMaybe<Orders_Aggregate_Bool_Exp_Count>;
-};
-
-export type Orders_Aggregate_Bool_Exp_Count = {
-  arguments?: InputMaybe<Array<Orders_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-  filter?: InputMaybe<Orders_Bool_Exp>;
-  predicate: Int_Comparison_Exp;
 };
 
 /** aggregate fields of "orders" */
@@ -1979,7 +2383,7 @@ export type Orders_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "orders" */
 export type Orders_Arr_Rel_Insert_Input = {
   data: Array<Orders_Insert_Input>;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: InputMaybe<Orders_On_Conflict>;
 };
 
@@ -1987,8 +2391,6 @@ export type Orders_Arr_Rel_Insert_Input = {
 export type Orders_Avg_Fields = {
   __typename?: 'orders_avg_fields';
   payment_id?: Maybe<Scalars['Float']['output']>;
-  /** A computed field, executes function "sum_by_order" */
-  sum?: Maybe<Scalars['numeric']['output']>;
 };
 
 /** order by avg() on columns of table "orders" */
@@ -2009,7 +2411,9 @@ export type Orders_Bool_Exp = {
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   order_items?: InputMaybe<Orders_Products_Bool_Exp>;
-  order_items_aggregate?: InputMaybe<Orders_Products_Aggregate_Bool_Exp>;
+  order_status?: InputMaybe<Order_Status_Bool_Exp>;
+  paymentStatusByPaymentStatus?: InputMaybe<Payment_Status_Bool_Exp>;
+  paymentTypeByPaymentType?: InputMaybe<Payment_Types_Bool_Exp>;
   payment_id?: InputMaybe<Int_Comparison_Exp>;
   payment_status?: InputMaybe<Payment_Status_Enum_Comparison_Exp>;
   payment_type?: InputMaybe<Payment_Types_Enum_Comparison_Exp>;
@@ -2019,7 +2423,7 @@ export type Orders_Bool_Exp = {
 
 /** unique or primary key constraints on table "orders" */
 export enum Orders_Constraint {
-  /** unique or primary key constraint on columns "id" */
+  /** unique or primary key constraint */
   OrdersPkey = 'orders_pkey'
 }
 
@@ -2038,6 +2442,9 @@ export type Orders_Insert_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   order_items?: InputMaybe<Orders_Products_Arr_Rel_Insert_Input>;
+  order_status?: InputMaybe<Order_Status_Obj_Rel_Insert_Input>;
+  paymentStatusByPaymentStatus?: InputMaybe<Payment_Status_Obj_Rel_Insert_Input>;
+  paymentTypeByPaymentType?: InputMaybe<Payment_Types_Obj_Rel_Insert_Input>;
   payment_id?: InputMaybe<Scalars['Int']['input']>;
   payment_status?: InputMaybe<Payment_Status_Enum>;
   payment_type?: InputMaybe<Payment_Types_Enum>;
@@ -2054,8 +2461,6 @@ export type Orders_Max_Fields = {
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   payment_id?: Maybe<Scalars['Int']['output']>;
-  /** A computed field, executes function "sum_by_order" */
-  sum?: Maybe<Scalars['numeric']['output']>;
 };
 
 /** order by max() on columns of table "orders" */
@@ -2079,8 +2484,6 @@ export type Orders_Min_Fields = {
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   payment_id?: Maybe<Scalars['Int']['output']>;
-  /** A computed field, executes function "sum_by_order" */
-  sum?: Maybe<Scalars['numeric']['output']>;
 };
 
 /** order by min() on columns of table "orders" */
@@ -2106,11 +2509,11 @@ export type Orders_Mutation_Response = {
 /** input type for inserting object relation for remote table "orders" */
 export type Orders_Obj_Rel_Insert_Input = {
   data: Orders_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: InputMaybe<Orders_On_Conflict>;
 };
 
-/** on_conflict condition type for table "orders" */
+/** on conflict condition type for table "orders" */
 export type Orders_On_Conflict = {
   constraint: Orders_Constraint;
   update_columns?: Array<Orders_Update_Column>;
@@ -2127,11 +2530,13 @@ export type Orders_Order_By = {
   created_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   order_items_aggregate?: InputMaybe<Orders_Products_Aggregate_Order_By>;
+  order_status?: InputMaybe<Order_Status_Order_By>;
+  paymentStatusByPaymentStatus?: InputMaybe<Payment_Status_Order_By>;
+  paymentTypeByPaymentType?: InputMaybe<Payment_Types_Order_By>;
   payment_id?: InputMaybe<Order_By>;
   payment_status?: InputMaybe<Order_By>;
   payment_type?: InputMaybe<Order_By>;
   status?: InputMaybe<Order_By>;
-  sum?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: orders */
@@ -2157,17 +2562,6 @@ export type Orders_Products_Aggregate = {
   __typename?: 'orders_products_aggregate';
   aggregate?: Maybe<Orders_Products_Aggregate_Fields>;
   nodes: Array<Orders_Products>;
-};
-
-export type Orders_Products_Aggregate_Bool_Exp = {
-  count?: InputMaybe<Orders_Products_Aggregate_Bool_Exp_Count>;
-};
-
-export type Orders_Products_Aggregate_Bool_Exp_Count = {
-  arguments?: InputMaybe<Array<Orders_Products_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-  filter?: InputMaybe<Orders_Products_Bool_Exp>;
-  predicate: Int_Comparison_Exp;
 };
 
 /** aggregate fields of "orders_products" */
@@ -2211,7 +2605,7 @@ export type Orders_Products_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "orders_products" */
 export type Orders_Products_Arr_Rel_Insert_Input = {
   data: Array<Orders_Products_Insert_Input>;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: InputMaybe<Orders_Products_On_Conflict>;
 };
 
@@ -2241,7 +2635,7 @@ export type Orders_Products_Bool_Exp = {
 
 /** unique or primary key constraints on table "orders_products" */
 export enum Orders_Products_Constraint {
-  /** unique or primary key constraint on columns "id" */
+  /** unique or primary key constraint */
   OrdersProductsPkey = 'orders_products_pkey'
 }
 
@@ -2303,7 +2697,7 @@ export type Orders_Products_Mutation_Response = {
   returning: Array<Orders_Products>;
 };
 
-/** on_conflict condition type for table "orders_products" */
+/** on conflict condition type for table "orders_products" */
 export type Orders_Products_On_Conflict = {
   constraint: Orders_Products_Constraint;
   update_columns?: Array<Orders_Products_Update_Column>;
@@ -2378,22 +2772,6 @@ export type Orders_Products_Stddev_Samp_Order_By = {
   amount?: InputMaybe<Order_By>;
 };
 
-/** Streaming cursor of the table "orders_products" */
-export type Orders_Products_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Orders_Products_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Orders_Products_Stream_Cursor_Value_Input = {
-  amount?: InputMaybe<Scalars['numeric']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  order_id?: InputMaybe<Scalars['uuid']['input']>;
-  products_id?: InputMaybe<Scalars['uuid']['input']>;
-};
-
 /** aggregate sum on columns */
 export type Orders_Products_Sum_Fields = {
   __typename?: 'orders_products_sum_fields';
@@ -2416,15 +2794,6 @@ export enum Orders_Products_Update_Column {
   /** column name */
   ProductsId = 'products_id'
 }
-
-export type Orders_Products_Updates = {
-  /** increments the numeric columns with given value of the filtered values */
-  _inc?: InputMaybe<Orders_Products_Inc_Input>;
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Orders_Products_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Orders_Products_Bool_Exp;
-};
 
 /** aggregate var_pop on columns */
 export type Orders_Products_Var_Pop_Fields = {
@@ -2501,8 +2870,6 @@ export type Orders_Set_Input = {
 export type Orders_Stddev_Fields = {
   __typename?: 'orders_stddev_fields';
   payment_id?: Maybe<Scalars['Float']['output']>;
-  /** A computed field, executes function "sum_by_order" */
-  sum?: Maybe<Scalars['numeric']['output']>;
 };
 
 /** order by stddev() on columns of table "orders" */
@@ -2514,8 +2881,6 @@ export type Orders_Stddev_Order_By = {
 export type Orders_Stddev_Pop_Fields = {
   __typename?: 'orders_stddev_pop_fields';
   payment_id?: Maybe<Scalars['Float']['output']>;
-  /** A computed field, executes function "sum_by_order" */
-  sum?: Maybe<Scalars['numeric']['output']>;
 };
 
 /** order by stddev_pop() on columns of table "orders" */
@@ -2527,8 +2892,6 @@ export type Orders_Stddev_Pop_Order_By = {
 export type Orders_Stddev_Samp_Fields = {
   __typename?: 'orders_stddev_samp_fields';
   payment_id?: Maybe<Scalars['Float']['output']>;
-  /** A computed field, executes function "sum_by_order" */
-  sum?: Maybe<Scalars['numeric']['output']>;
 };
 
 /** order by stddev_samp() on columns of table "orders" */
@@ -2536,34 +2899,10 @@ export type Orders_Stddev_Samp_Order_By = {
   payment_id?: InputMaybe<Order_By>;
 };
 
-/** Streaming cursor of the table "orders" */
-export type Orders_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Orders_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Orders_Stream_Cursor_Value_Input = {
-  client_address?: InputMaybe<Scalars['String']['input']>;
-  client_name?: InputMaybe<Scalars['String']['input']>;
-  client_phone?: InputMaybe<Scalars['String']['input']>;
-  comment?: InputMaybe<Scalars['String']['input']>;
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  payment_id?: InputMaybe<Scalars['Int']['input']>;
-  payment_status?: InputMaybe<Payment_Status_Enum>;
-  payment_type?: InputMaybe<Payment_Types_Enum>;
-  status?: InputMaybe<Order_Status_Enum>;
-};
-
 /** aggregate sum on columns */
 export type Orders_Sum_Fields = {
   __typename?: 'orders_sum_fields';
   payment_id?: Maybe<Scalars['Int']['output']>;
-  /** A computed field, executes function "sum_by_order" */
-  sum?: Maybe<Scalars['numeric']['output']>;
 };
 
 /** order by sum() on columns of table "orders" */
@@ -2595,21 +2934,10 @@ export enum Orders_Update_Column {
   Status = 'status'
 }
 
-export type Orders_Updates = {
-  /** increments the numeric columns with given value of the filtered values */
-  _inc?: InputMaybe<Orders_Inc_Input>;
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Orders_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Orders_Bool_Exp;
-};
-
 /** aggregate var_pop on columns */
 export type Orders_Var_Pop_Fields = {
   __typename?: 'orders_var_pop_fields';
   payment_id?: Maybe<Scalars['Float']['output']>;
-  /** A computed field, executes function "sum_by_order" */
-  sum?: Maybe<Scalars['numeric']['output']>;
 };
 
 /** order by var_pop() on columns of table "orders" */
@@ -2621,8 +2949,6 @@ export type Orders_Var_Pop_Order_By = {
 export type Orders_Var_Samp_Fields = {
   __typename?: 'orders_var_samp_fields';
   payment_id?: Maybe<Scalars['Float']['output']>;
-  /** A computed field, executes function "sum_by_order" */
-  sum?: Maybe<Scalars['numeric']['output']>;
 };
 
 /** order by var_samp() on columns of table "orders" */
@@ -2634,8 +2960,6 @@ export type Orders_Var_Samp_Order_By = {
 export type Orders_Variance_Fields = {
   __typename?: 'orders_variance_fields';
   payment_id?: Maybe<Scalars['Float']['output']>;
-  /** A computed field, executes function "sum_by_order" */
-  sum?: Maybe<Scalars['numeric']['output']>;
 };
 
 /** order by variance() on columns of table "orders" */
@@ -2648,6 +2972,30 @@ export type Payment_Status = {
   __typename?: 'payment_status';
   id: Scalars['String']['output'];
   label: Scalars['String']['output'];
+  /** fetch data from the table: "orders" */
+  orders: Array<Orders>;
+  /** An aggregate relationship */
+  orders_aggregate: Orders_Aggregate;
+};
+
+
+/** columns and relationships of "payment_status" */
+export type Payment_StatusOrdersArgs = {
+  distinct_on?: InputMaybe<Array<Orders_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Orders_Order_By>>;
+  where?: InputMaybe<Orders_Bool_Exp>;
+};
+
+
+/** columns and relationships of "payment_status" */
+export type Payment_StatusOrders_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Orders_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Orders_Order_By>>;
+  where?: InputMaybe<Orders_Bool_Exp>;
 };
 
 /** aggregated selection of "payment_status" */
@@ -2679,11 +3027,12 @@ export type Payment_Status_Bool_Exp = {
   _or?: InputMaybe<Array<Payment_Status_Bool_Exp>>;
   id?: InputMaybe<String_Comparison_Exp>;
   label?: InputMaybe<String_Comparison_Exp>;
+  orders?: InputMaybe<Orders_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "payment_status" */
 export enum Payment_Status_Constraint {
-  /** unique or primary key constraint on columns "id" */
+  /** unique or primary key constraint */
   PaymentStatusPkey = 'payment_status_pkey'
 }
 
@@ -2709,6 +3058,7 @@ export type Payment_Status_Enum_Comparison_Exp = {
 export type Payment_Status_Insert_Input = {
   id?: InputMaybe<Scalars['String']['input']>;
   label?: InputMaybe<Scalars['String']['input']>;
+  orders?: InputMaybe<Orders_Arr_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -2734,7 +3084,14 @@ export type Payment_Status_Mutation_Response = {
   returning: Array<Payment_Status>;
 };
 
-/** on_conflict condition type for table "payment_status" */
+/** input type for inserting object relation for remote table "payment_status" */
+export type Payment_Status_Obj_Rel_Insert_Input = {
+  data: Payment_Status_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: InputMaybe<Payment_Status_On_Conflict>;
+};
+
+/** on conflict condition type for table "payment_status" */
 export type Payment_Status_On_Conflict = {
   constraint: Payment_Status_Constraint;
   update_columns?: Array<Payment_Status_Update_Column>;
@@ -2745,6 +3102,7 @@ export type Payment_Status_On_Conflict = {
 export type Payment_Status_Order_By = {
   id?: InputMaybe<Order_By>;
   label?: InputMaybe<Order_By>;
+  orders_aggregate?: InputMaybe<Orders_Aggregate_Order_By>;
 };
 
 /** primary key columns input for table: payment_status */
@@ -2766,20 +3124,6 @@ export type Payment_Status_Set_Input = {
   label?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Streaming cursor of the table "payment_status" */
-export type Payment_Status_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Payment_Status_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Payment_Status_Stream_Cursor_Value_Input = {
-  id?: InputMaybe<Scalars['String']['input']>;
-  label?: InputMaybe<Scalars['String']['input']>;
-};
-
 /** update columns of table "payment_status" */
 export enum Payment_Status_Update_Column {
   /** column name */
@@ -2788,18 +3132,35 @@ export enum Payment_Status_Update_Column {
   Label = 'label'
 }
 
-export type Payment_Status_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Payment_Status_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Payment_Status_Bool_Exp;
-};
-
 /** columns and relationships of "payment_types" */
 export type Payment_Types = {
   __typename?: 'payment_types';
   id: Scalars['String']['output'];
   label: Scalars['String']['output'];
+  /** fetch data from the table: "orders" */
+  orders: Array<Orders>;
+  /** An aggregate relationship */
+  orders_aggregate: Orders_Aggregate;
+};
+
+
+/** columns and relationships of "payment_types" */
+export type Payment_TypesOrdersArgs = {
+  distinct_on?: InputMaybe<Array<Orders_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Orders_Order_By>>;
+  where?: InputMaybe<Orders_Bool_Exp>;
+};
+
+
+/** columns and relationships of "payment_types" */
+export type Payment_TypesOrders_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Orders_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Orders_Order_By>>;
+  where?: InputMaybe<Orders_Bool_Exp>;
 };
 
 /** aggregated selection of "payment_types" */
@@ -2831,11 +3192,12 @@ export type Payment_Types_Bool_Exp = {
   _or?: InputMaybe<Array<Payment_Types_Bool_Exp>>;
   id?: InputMaybe<String_Comparison_Exp>;
   label?: InputMaybe<String_Comparison_Exp>;
+  orders?: InputMaybe<Orders_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "payment_types" */
 export enum Payment_Types_Constraint {
-  /** unique or primary key constraint on columns "id" */
+  /** unique or primary key constraint */
   PaymentTypePkey = 'payment_type_pkey'
 }
 
@@ -2861,6 +3223,7 @@ export type Payment_Types_Enum_Comparison_Exp = {
 export type Payment_Types_Insert_Input = {
   id?: InputMaybe<Scalars['String']['input']>;
   label?: InputMaybe<Scalars['String']['input']>;
+  orders?: InputMaybe<Orders_Arr_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -2886,7 +3249,14 @@ export type Payment_Types_Mutation_Response = {
   returning: Array<Payment_Types>;
 };
 
-/** on_conflict condition type for table "payment_types" */
+/** input type for inserting object relation for remote table "payment_types" */
+export type Payment_Types_Obj_Rel_Insert_Input = {
+  data: Payment_Types_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: InputMaybe<Payment_Types_On_Conflict>;
+};
+
+/** on conflict condition type for table "payment_types" */
 export type Payment_Types_On_Conflict = {
   constraint: Payment_Types_Constraint;
   update_columns?: Array<Payment_Types_Update_Column>;
@@ -2897,6 +3267,7 @@ export type Payment_Types_On_Conflict = {
 export type Payment_Types_Order_By = {
   id?: InputMaybe<Order_By>;
   label?: InputMaybe<Order_By>;
+  orders_aggregate?: InputMaybe<Orders_Aggregate_Order_By>;
 };
 
 /** primary key columns input for table: payment_types */
@@ -2918,20 +3289,6 @@ export type Payment_Types_Set_Input = {
   label?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Streaming cursor of the table "payment_types" */
-export type Payment_Types_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Payment_Types_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Payment_Types_Stream_Cursor_Value_Input = {
-  id?: InputMaybe<Scalars['String']['input']>;
-  label?: InputMaybe<Scalars['String']['input']>;
-};
-
 /** update columns of table "payment_types" */
 export enum Payment_Types_Update_Column {
   /** column name */
@@ -2939,13 +3296,6 @@ export enum Payment_Types_Update_Column {
   /** column name */
   Label = 'label'
 }
-
-export type Payment_Types_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Payment_Types_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Payment_Types_Bool_Exp;
-};
 
 /** columns and relationships of "personnel" */
 export type Personnel = {
@@ -2965,17 +3315,6 @@ export type Personnel_Aggregate = {
   __typename?: 'personnel_aggregate';
   aggregate?: Maybe<Personnel_Aggregate_Fields>;
   nodes: Array<Personnel>;
-};
-
-export type Personnel_Aggregate_Bool_Exp = {
-  count?: InputMaybe<Personnel_Aggregate_Bool_Exp_Count>;
-};
-
-export type Personnel_Aggregate_Bool_Exp_Count = {
-  arguments?: InputMaybe<Array<Personnel_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-  filter?: InputMaybe<Personnel_Bool_Exp>;
-  predicate: Int_Comparison_Exp;
 };
 
 /** aggregate fields of "personnel" */
@@ -3003,7 +3342,7 @@ export type Personnel_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "personnel" */
 export type Personnel_Arr_Rel_Insert_Input = {
   data: Array<Personnel_Insert_Input>;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: InputMaybe<Personnel_On_Conflict>;
 };
 
@@ -3082,14 +3421,13 @@ export type Personnel_Categories_Bool_Exp = {
   _or?: InputMaybe<Array<Personnel_Categories_Bool_Exp>>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   personnel_items?: InputMaybe<Personnel_Bool_Exp>;
-  personnel_items_aggregate?: InputMaybe<Personnel_Aggregate_Bool_Exp>;
   slug?: InputMaybe<String_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "personnel_categories" */
 export enum Personnel_Categories_Constraint {
-  /** unique or primary key constraint on columns "id" */
+  /** unique or primary key constraint */
   PersonnelCategoriesPkey = 'personnel_categories_pkey'
 }
 
@@ -3129,11 +3467,11 @@ export type Personnel_Categories_Mutation_Response = {
 /** input type for inserting object relation for remote table "personnel_categories" */
 export type Personnel_Categories_Obj_Rel_Insert_Input = {
   data: Personnel_Categories_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: InputMaybe<Personnel_Categories_On_Conflict>;
 };
 
-/** on_conflict condition type for table "personnel_categories" */
+/** on conflict condition type for table "personnel_categories" */
 export type Personnel_Categories_On_Conflict = {
   constraint: Personnel_Categories_Constraint;
   update_columns?: Array<Personnel_Categories_Update_Column>;
@@ -3170,21 +3508,6 @@ export type Personnel_Categories_Set_Input = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Streaming cursor of the table "personnel_categories" */
-export type Personnel_Categories_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Personnel_Categories_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Personnel_Categories_Stream_Cursor_Value_Input = {
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  slug?: InputMaybe<Scalars['String']['input']>;
-  title?: InputMaybe<Scalars['String']['input']>;
-};
-
 /** update columns of table "personnel_categories" */
 export enum Personnel_Categories_Update_Column {
   /** column name */
@@ -3195,16 +3518,9 @@ export enum Personnel_Categories_Update_Column {
   Title = 'title'
 }
 
-export type Personnel_Categories_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Personnel_Categories_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Personnel_Categories_Bool_Exp;
-};
-
 /** unique or primary key constraints on table "personnel" */
 export enum Personnel_Constraint {
-  /** unique or primary key constraint on columns "id" */
+  /** unique or primary key constraint */
   PersonnelPkey = 'personnel_pkey'
 }
 
@@ -3270,7 +3586,7 @@ export type Personnel_Mutation_Response = {
   returning: Array<Personnel>;
 };
 
-/** on_conflict condition type for table "personnel" */
+/** on conflict condition type for table "personnel" */
 export type Personnel_On_Conflict = {
   constraint: Personnel_Constraint;
   update_columns?: Array<Personnel_Update_Column>;
@@ -3319,24 +3635,6 @@ export type Personnel_Set_Input = {
   specialty?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Streaming cursor of the table "personnel" */
-export type Personnel_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Personnel_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Personnel_Stream_Cursor_Value_Input = {
-  description?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  image?: InputMaybe<Scalars['String']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  personnel_category_id?: InputMaybe<Scalars['uuid']['input']>;
-  specialty?: InputMaybe<Scalars['String']['input']>;
-};
-
 /** update columns of table "personnel" */
 export enum Personnel_Update_Column {
   /** column name */
@@ -3352,13 +3650,6 @@ export enum Personnel_Update_Column {
   /** column name */
   Specialty = 'specialty'
 }
-
-export type Personnel_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Personnel_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Personnel_Bool_Exp;
-};
 
 /** columns and relationships of "price_list" */
 export type Price_List = {
@@ -3376,17 +3667,6 @@ export type Price_List_Aggregate = {
   __typename?: 'price_list_aggregate';
   aggregate?: Maybe<Price_List_Aggregate_Fields>;
   nodes: Array<Price_List>;
-};
-
-export type Price_List_Aggregate_Bool_Exp = {
-  count?: InputMaybe<Price_List_Aggregate_Bool_Exp_Count>;
-};
-
-export type Price_List_Aggregate_Bool_Exp_Count = {
-  arguments?: InputMaybe<Array<Price_List_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-  filter?: InputMaybe<Price_List_Bool_Exp>;
-  predicate: Int_Comparison_Exp;
 };
 
 /** aggregate fields of "price_list" */
@@ -3430,7 +3710,7 @@ export type Price_List_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "price_list" */
 export type Price_List_Arr_Rel_Insert_Input = {
   data: Array<Price_List_Insert_Input>;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: InputMaybe<Price_List_On_Conflict>;
 };
 
@@ -3518,14 +3798,13 @@ export type Price_List_Categories_Bool_Exp = {
   _or?: InputMaybe<Array<Price_List_Categories_Bool_Exp>>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   price_list_items?: InputMaybe<Price_List_Bool_Exp>;
-  price_list_items_aggregate?: InputMaybe<Price_List_Aggregate_Bool_Exp>;
   slug?: InputMaybe<String_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "price_list_categories" */
 export enum Price_List_Categories_Constraint {
-  /** unique or primary key constraint on columns "id" */
+  /** unique or primary key constraint */
   PriceListPkey = 'price_list_pkey'
 }
 
@@ -3565,11 +3844,11 @@ export type Price_List_Categories_Mutation_Response = {
 /** input type for inserting object relation for remote table "price_list_categories" */
 export type Price_List_Categories_Obj_Rel_Insert_Input = {
   data: Price_List_Categories_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: InputMaybe<Price_List_Categories_On_Conflict>;
 };
 
-/** on_conflict condition type for table "price_list_categories" */
+/** on conflict condition type for table "price_list_categories" */
 export type Price_List_Categories_On_Conflict = {
   constraint: Price_List_Categories_Constraint;
   update_columns?: Array<Price_List_Categories_Update_Column>;
@@ -3606,21 +3885,6 @@ export type Price_List_Categories_Set_Input = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Streaming cursor of the table "price_list_categories" */
-export type Price_List_Categories_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Price_List_Categories_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Price_List_Categories_Stream_Cursor_Value_Input = {
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  slug?: InputMaybe<Scalars['String']['input']>;
-  title?: InputMaybe<Scalars['String']['input']>;
-};
-
 /** update columns of table "price_list_categories" */
 export enum Price_List_Categories_Update_Column {
   /** column name */
@@ -3631,16 +3895,9 @@ export enum Price_List_Categories_Update_Column {
   Title = 'title'
 }
 
-export type Price_List_Categories_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Price_List_Categories_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Price_List_Categories_Bool_Exp;
-};
-
 /** unique or primary key constraints on table "price_list" */
 export enum Price_List_Constraint {
-  /** unique or primary key constraint on columns "id" */
+  /** unique or primary key constraint */
   PriceListPkey1 = 'price_list_pkey1'
 }
 
@@ -3701,7 +3958,7 @@ export type Price_List_Mutation_Response = {
   returning: Array<Price_List>;
 };
 
-/** on_conflict condition type for table "price_list" */
+/** on conflict condition type for table "price_list" */
 export type Price_List_On_Conflict = {
   constraint: Price_List_Constraint;
   update_columns?: Array<Price_List_Update_Column>;
@@ -3775,22 +4032,6 @@ export type Price_List_Stddev_Samp_Order_By = {
   price?: InputMaybe<Order_By>;
 };
 
-/** Streaming cursor of the table "price_list" */
-export type Price_List_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Price_List_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Price_List_Stream_Cursor_Value_Input = {
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  price?: InputMaybe<Scalars['numeric']['input']>;
-  price_list_category_id?: InputMaybe<Scalars['uuid']['input']>;
-  title?: InputMaybe<Scalars['String']['input']>;
-};
-
 /** aggregate sum on columns */
 export type Price_List_Sum_Fields = {
   __typename?: 'price_list_sum_fields';
@@ -3813,15 +4054,6 @@ export enum Price_List_Update_Column {
   /** column name */
   Title = 'title'
 }
-
-export type Price_List_Updates = {
-  /** increments the numeric columns with given value of the filtered values */
-  _inc?: InputMaybe<Price_List_Inc_Input>;
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Price_List_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Price_List_Bool_Exp;
-};
 
 /** aggregate var_pop on columns */
 export type Price_List_Var_Pop_Fields = {
@@ -3877,17 +4109,6 @@ export type Products_Aggregate = {
   nodes: Array<Products>;
 };
 
-export type Products_Aggregate_Bool_Exp = {
-  count?: InputMaybe<Products_Aggregate_Bool_Exp_Count>;
-};
-
-export type Products_Aggregate_Bool_Exp_Count = {
-  arguments?: InputMaybe<Array<Products_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-  filter?: InputMaybe<Products_Bool_Exp>;
-  predicate: Int_Comparison_Exp;
-};
-
 /** aggregate fields of "products" */
 export type Products_Aggregate_Fields = {
   __typename?: 'products_aggregate_fields';
@@ -3929,7 +4150,7 @@ export type Products_Aggregate_Order_By = {
 /** input type for inserting array relation for remote table "products" */
 export type Products_Arr_Rel_Insert_Input = {
   data: Array<Products_Insert_Input>;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: InputMaybe<Products_On_Conflict>;
 };
 
@@ -4022,14 +4243,13 @@ export type Products_Categories_Bool_Exp = {
   _or?: InputMaybe<Array<Products_Categories_Bool_Exp>>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   products_items?: InputMaybe<Products_Bool_Exp>;
-  products_items_aggregate?: InputMaybe<Products_Aggregate_Bool_Exp>;
   slug?: InputMaybe<String_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "products_categories" */
 export enum Products_Categories_Constraint {
-  /** unique or primary key constraint on columns "id" */
+  /** unique or primary key constraint */
   ProductsCategoryPkey = 'products_category_pkey'
 }
 
@@ -4069,11 +4289,11 @@ export type Products_Categories_Mutation_Response = {
 /** input type for inserting object relation for remote table "products_categories" */
 export type Products_Categories_Obj_Rel_Insert_Input = {
   data: Products_Categories_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: InputMaybe<Products_Categories_On_Conflict>;
 };
 
-/** on_conflict condition type for table "products_categories" */
+/** on conflict condition type for table "products_categories" */
 export type Products_Categories_On_Conflict = {
   constraint: Products_Categories_Constraint;
   update_columns?: Array<Products_Categories_Update_Column>;
@@ -4110,21 +4330,6 @@ export type Products_Categories_Set_Input = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** Streaming cursor of the table "products_categories" */
-export type Products_Categories_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Products_Categories_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Products_Categories_Stream_Cursor_Value_Input = {
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  slug?: InputMaybe<Scalars['String']['input']>;
-  title?: InputMaybe<Scalars['String']['input']>;
-};
-
 /** update columns of table "products_categories" */
 export enum Products_Categories_Update_Column {
   /** column name */
@@ -4135,16 +4340,9 @@ export enum Products_Categories_Update_Column {
   Title = 'title'
 }
 
-export type Products_Categories_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Products_Categories_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Products_Categories_Bool_Exp;
-};
-
 /** unique or primary key constraints on table "products" */
 export enum Products_Constraint {
-  /** unique or primary key constraint on columns "id" */
+  /** unique or primary key constraint */
   ProductsPkey = 'products_pkey'
 }
 
@@ -4224,11 +4422,11 @@ export type Products_Mutation_Response = {
 /** input type for inserting object relation for remote table "products" */
 export type Products_Obj_Rel_Insert_Input = {
   data: Products_Insert_Input;
-  /** upsert condition */
+  /** on conflict condition */
   on_conflict?: InputMaybe<Products_On_Conflict>;
 };
 
-/** on_conflict condition type for table "products" */
+/** on conflict condition type for table "products" */
 export type Products_On_Conflict = {
   constraint: Products_Constraint;
   update_columns?: Array<Products_Update_Column>;
@@ -4320,25 +4518,6 @@ export type Products_Stddev_Samp_Order_By = {
   weight?: InputMaybe<Order_By>;
 };
 
-/** Streaming cursor of the table "products" */
-export type Products_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Products_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Products_Stream_Cursor_Value_Input = {
-  description?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-  image?: InputMaybe<Scalars['String']['input']>;
-  price?: InputMaybe<Scalars['numeric']['input']>;
-  products_category_id?: InputMaybe<Scalars['uuid']['input']>;
-  title?: InputMaybe<Scalars['String']['input']>;
-  weight?: InputMaybe<Scalars['numeric']['input']>;
-};
-
 /** aggregate sum on columns */
 export type Products_Sum_Fields = {
   __typename?: 'products_sum_fields';
@@ -4369,15 +4548,6 @@ export enum Products_Update_Column {
   /** column name */
   Weight = 'weight'
 }
-
-export type Products_Updates = {
-  /** increments the numeric columns with given value of the filtered values */
-  _inc?: InputMaybe<Products_Inc_Input>;
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Products_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Products_Bool_Exp;
-};
 
 /** aggregate var_pop on columns */
 export type Products_Var_Pop_Fields = {
@@ -4438,6 +4608,7 @@ export type Query_Root = {
   cloudinarySignature?: Maybe<CloudinarySignatureOutput>;
   /** Customer login */
   customerLogin?: Maybe<CustomerLoginOutput>;
+  customerLoginPassword?: Maybe<CustomerLoginPasswordOutput>;
   /** Customer verify code */
   customerVerifyCode?: Maybe<CustomerVerifyCodeOutput>;
   /** fetch data from the table: "customers" */
@@ -4446,17 +4617,29 @@ export type Query_Root = {
   customers_aggregate: Customers_Aggregate;
   /** fetch data from the table: "customers" using primary key columns */
   customers_by_pk?: Maybe<Customers>;
+  /** fetch data from the table: "form_services" */
+  form_services: Array<Form_Services>;
+  /** fetch aggregated fields from the table: "form_services" */
+  form_services_aggregate: Form_Services_Aggregate;
+  /** fetch data from the table: "form_services" using primary key columns */
+  form_services_by_pk?: Maybe<Form_Services>;
   /** fetch data from the table: "last_week_orders" */
   last_week_orders: Array<Last_Week_Orders>;
   /** fetch aggregated fields from the table: "last_week_orders" */
   last_week_orders_aggregate: Last_Week_Orders_Aggregate;
+  /** fetch data from the table: "main_services" */
+  main_services: Array<Main_Services>;
+  /** fetch aggregated fields from the table: "main_services" */
+  main_services_aggregate: Main_Services_Aggregate;
+  /** fetch data from the table: "main_services" using primary key columns */
+  main_services_by_pk?: Maybe<Main_Services>;
   /** fetch data from the table: "order_status" */
   order_status: Array<Order_Status>;
   /** fetch aggregated fields from the table: "order_status" */
   order_status_aggregate: Order_Status_Aggregate;
   /** fetch data from the table: "order_status" using primary key columns */
   order_status_by_pk?: Maybe<Order_Status>;
-  /** An array relationship */
+  /** fetch data from the table: "orders" */
   orders: Array<Orders>;
   /** An aggregate relationship */
   orders_aggregate: Orders_Aggregate;
@@ -4516,6 +4699,30 @@ export type Query_Root = {
   products_categories_aggregate: Products_Categories_Aggregate;
   /** fetch data from the table: "products_categories" using primary key columns */
   products_categories_by_pk?: Maybe<Products_Categories>;
+  /** fetch data from the table: "service_categories" */
+  service_categories: Array<Service_Categories>;
+  /** fetch aggregated fields from the table: "service_categories" */
+  service_categories_aggregate: Service_Categories_Aggregate;
+  /** fetch data from the table: "service_categories" using primary key columns */
+  service_categories_by_pk?: Maybe<Service_Categories>;
+  /** fetch data from the table: "service_sections" */
+  service_sections: Array<Service_Sections>;
+  /** fetch aggregated fields from the table: "service_sections" */
+  service_sections_aggregate: Service_Sections_Aggregate;
+  /** fetch data from the table: "service_sections" using primary key columns */
+  service_sections_by_pk?: Maybe<Service_Sections>;
+  /** An array relationship */
+  service_subcategories: Array<Service_Subcategories>;
+  /** An aggregate relationship */
+  service_subcategories_aggregate: Service_Subcategories_Aggregate;
+  /** fetch data from the table: "service_subcategories" using primary key columns */
+  service_subcategories_by_pk?: Maybe<Service_Subcategories>;
+  /** fetch data from the table: "services" */
+  services: Array<Services>;
+  /** fetch aggregated fields from the table: "services" */
+  services_aggregate: Services_Aggregate;
+  /** fetch data from the table: "services" using primary key columns */
+  services_by_pk?: Maybe<Services>;
 };
 
 
@@ -4575,6 +4782,11 @@ export type Query_RootCustomerLoginArgs = {
 };
 
 
+export type Query_RootCustomerLoginPasswordArgs = {
+  customer: CustomerLoginPasswordInput;
+};
+
+
 export type Query_RootCustomerVerifyCodeArgs = {
   input: CustomerVerifyCodeInput;
 };
@@ -4603,6 +4815,29 @@ export type Query_RootCustomers_By_PkArgs = {
 };
 
 
+export type Query_RootForm_ServicesArgs = {
+  distinct_on?: InputMaybe<Array<Form_Services_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Form_Services_Order_By>>;
+  where?: InputMaybe<Form_Services_Bool_Exp>;
+};
+
+
+export type Query_RootForm_Services_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Form_Services_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Form_Services_Order_By>>;
+  where?: InputMaybe<Form_Services_Bool_Exp>;
+};
+
+
+export type Query_RootForm_Services_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
 export type Query_RootLast_Week_OrdersArgs = {
   distinct_on?: InputMaybe<Array<Last_Week_Orders_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -4618,6 +4853,29 @@ export type Query_RootLast_Week_Orders_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   order_by?: InputMaybe<Array<Last_Week_Orders_Order_By>>;
   where?: InputMaybe<Last_Week_Orders_Bool_Exp>;
+};
+
+
+export type Query_RootMain_ServicesArgs = {
+  distinct_on?: InputMaybe<Array<Main_Services_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Main_Services_Order_By>>;
+  where?: InputMaybe<Main_Services_Bool_Exp>;
+};
+
+
+export type Query_RootMain_Services_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Main_Services_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Main_Services_Order_By>>;
+  where?: InputMaybe<Main_Services_Bool_Exp>;
+};
+
+
+export type Query_RootMain_Services_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -4873,6 +5131,754 @@ export type Query_RootProducts_Categories_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
+
+export type Query_RootService_CategoriesArgs = {
+  distinct_on?: InputMaybe<Array<Service_Categories_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Service_Categories_Order_By>>;
+  where?: InputMaybe<Service_Categories_Bool_Exp>;
+};
+
+
+export type Query_RootService_Categories_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Service_Categories_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Service_Categories_Order_By>>;
+  where?: InputMaybe<Service_Categories_Bool_Exp>;
+};
+
+
+export type Query_RootService_Categories_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootService_SectionsArgs = {
+  distinct_on?: InputMaybe<Array<Service_Sections_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Service_Sections_Order_By>>;
+  where?: InputMaybe<Service_Sections_Bool_Exp>;
+};
+
+
+export type Query_RootService_Sections_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Service_Sections_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Service_Sections_Order_By>>;
+  where?: InputMaybe<Service_Sections_Bool_Exp>;
+};
+
+
+export type Query_RootService_Sections_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootService_SubcategoriesArgs = {
+  distinct_on?: InputMaybe<Array<Service_Subcategories_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Service_Subcategories_Order_By>>;
+  where?: InputMaybe<Service_Subcategories_Bool_Exp>;
+};
+
+
+export type Query_RootService_Subcategories_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Service_Subcategories_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Service_Subcategories_Order_By>>;
+  where?: InputMaybe<Service_Subcategories_Bool_Exp>;
+};
+
+
+export type Query_RootService_Subcategories_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootServicesArgs = {
+  distinct_on?: InputMaybe<Array<Services_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Services_Order_By>>;
+  where?: InputMaybe<Services_Bool_Exp>;
+};
+
+
+export type Query_RootServices_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Services_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Services_Order_By>>;
+  where?: InputMaybe<Services_Bool_Exp>;
+};
+
+
+export type Query_RootServices_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+/** columns and relationships of "service_categories" */
+export type Service_Categories = {
+  __typename?: 'service_categories';
+  id: Scalars['uuid']['output'];
+  preview: Scalars['String']['output'];
+  section_id: Scalars['uuid']['output'];
+  /** An array relationship */
+  service_subcategories: Array<Service_Subcategories>;
+  /** An aggregate relationship */
+  service_subcategories_aggregate: Service_Subcategories_Aggregate;
+  title: Scalars['String']['output'];
+};
+
+
+/** columns and relationships of "service_categories" */
+export type Service_CategoriesService_SubcategoriesArgs = {
+  distinct_on?: InputMaybe<Array<Service_Subcategories_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Service_Subcategories_Order_By>>;
+  where?: InputMaybe<Service_Subcategories_Bool_Exp>;
+};
+
+
+/** columns and relationships of "service_categories" */
+export type Service_CategoriesService_Subcategories_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Service_Subcategories_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Service_Subcategories_Order_By>>;
+  where?: InputMaybe<Service_Subcategories_Bool_Exp>;
+};
+
+/** aggregated selection of "service_categories" */
+export type Service_Categories_Aggregate = {
+  __typename?: 'service_categories_aggregate';
+  aggregate?: Maybe<Service_Categories_Aggregate_Fields>;
+  nodes: Array<Service_Categories>;
+};
+
+/** aggregate fields of "service_categories" */
+export type Service_Categories_Aggregate_Fields = {
+  __typename?: 'service_categories_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Service_Categories_Max_Fields>;
+  min?: Maybe<Service_Categories_Min_Fields>;
+};
+
+
+/** aggregate fields of "service_categories" */
+export type Service_Categories_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Service_Categories_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "service_categories" */
+export type Service_Categories_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Service_Categories_Max_Order_By>;
+  min?: InputMaybe<Service_Categories_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "service_categories" */
+export type Service_Categories_Arr_Rel_Insert_Input = {
+  data: Array<Service_Categories_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: InputMaybe<Service_Categories_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "service_categories". All fields are combined with a logical 'AND'. */
+export type Service_Categories_Bool_Exp = {
+  _and?: InputMaybe<Array<Service_Categories_Bool_Exp>>;
+  _not?: InputMaybe<Service_Categories_Bool_Exp>;
+  _or?: InputMaybe<Array<Service_Categories_Bool_Exp>>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  preview?: InputMaybe<String_Comparison_Exp>;
+  section_id?: InputMaybe<Uuid_Comparison_Exp>;
+  service_subcategories?: InputMaybe<Service_Subcategories_Bool_Exp>;
+  title?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "service_categories" */
+export enum Service_Categories_Constraint {
+  /** unique or primary key constraint */
+  ServiceCategoriesPkey = 'service_categories_pkey'
+}
+
+/** input type for inserting data into table "service_categories" */
+export type Service_Categories_Insert_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  preview?: InputMaybe<Scalars['String']['input']>;
+  section_id?: InputMaybe<Scalars['uuid']['input']>;
+  service_subcategories?: InputMaybe<Service_Subcategories_Arr_Rel_Insert_Input>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Service_Categories_Max_Fields = {
+  __typename?: 'service_categories_max_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  preview?: Maybe<Scalars['String']['output']>;
+  section_id?: Maybe<Scalars['uuid']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by max() on columns of table "service_categories" */
+export type Service_Categories_Max_Order_By = {
+  id?: InputMaybe<Order_By>;
+  preview?: InputMaybe<Order_By>;
+  section_id?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Service_Categories_Min_Fields = {
+  __typename?: 'service_categories_min_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  preview?: Maybe<Scalars['String']['output']>;
+  section_id?: Maybe<Scalars['uuid']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by min() on columns of table "service_categories" */
+export type Service_Categories_Min_Order_By = {
+  id?: InputMaybe<Order_By>;
+  preview?: InputMaybe<Order_By>;
+  section_id?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "service_categories" */
+export type Service_Categories_Mutation_Response = {
+  __typename?: 'service_categories_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Service_Categories>;
+};
+
+/** on conflict condition type for table "service_categories" */
+export type Service_Categories_On_Conflict = {
+  constraint: Service_Categories_Constraint;
+  update_columns?: Array<Service_Categories_Update_Column>;
+  where?: InputMaybe<Service_Categories_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "service_categories". */
+export type Service_Categories_Order_By = {
+  id?: InputMaybe<Order_By>;
+  preview?: InputMaybe<Order_By>;
+  section_id?: InputMaybe<Order_By>;
+  service_subcategories_aggregate?: InputMaybe<Service_Subcategories_Aggregate_Order_By>;
+  title?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: service_categories */
+export type Service_Categories_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "service_categories" */
+export enum Service_Categories_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Preview = 'preview',
+  /** column name */
+  SectionId = 'section_id',
+  /** column name */
+  Title = 'title'
+}
+
+/** input type for updating data in table "service_categories" */
+export type Service_Categories_Set_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  preview?: InputMaybe<Scalars['String']['input']>;
+  section_id?: InputMaybe<Scalars['uuid']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "service_categories" */
+export enum Service_Categories_Update_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Preview = 'preview',
+  /** column name */
+  SectionId = 'section_id',
+  /** column name */
+  Title = 'title'
+}
+
+/** columns and relationships of "service_sections" */
+export type Service_Sections = {
+  __typename?: 'service_sections';
+  id: Scalars['uuid']['output'];
+  /** fetch data from the table: "service_categories" */
+  service_categories: Array<Service_Categories>;
+  /** fetch aggregated fields from the table: "service_categories" */
+  service_categories_aggregate: Service_Categories_Aggregate;
+  title: Scalars['String']['output'];
+};
+
+
+/** columns and relationships of "service_sections" */
+export type Service_SectionsService_CategoriesArgs = {
+  distinct_on?: InputMaybe<Array<Service_Categories_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Service_Categories_Order_By>>;
+  where?: InputMaybe<Service_Categories_Bool_Exp>;
+};
+
+
+/** columns and relationships of "service_sections" */
+export type Service_SectionsService_Categories_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Service_Categories_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Service_Categories_Order_By>>;
+  where?: InputMaybe<Service_Categories_Bool_Exp>;
+};
+
+/** aggregated selection of "service_sections" */
+export type Service_Sections_Aggregate = {
+  __typename?: 'service_sections_aggregate';
+  aggregate?: Maybe<Service_Sections_Aggregate_Fields>;
+  nodes: Array<Service_Sections>;
+};
+
+/** aggregate fields of "service_sections" */
+export type Service_Sections_Aggregate_Fields = {
+  __typename?: 'service_sections_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Service_Sections_Max_Fields>;
+  min?: Maybe<Service_Sections_Min_Fields>;
+};
+
+
+/** aggregate fields of "service_sections" */
+export type Service_Sections_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Service_Sections_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "service_sections". All fields are combined with a logical 'AND'. */
+export type Service_Sections_Bool_Exp = {
+  _and?: InputMaybe<Array<Service_Sections_Bool_Exp>>;
+  _not?: InputMaybe<Service_Sections_Bool_Exp>;
+  _or?: InputMaybe<Array<Service_Sections_Bool_Exp>>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  service_categories?: InputMaybe<Service_Categories_Bool_Exp>;
+  title?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "service_sections" */
+export enum Service_Sections_Constraint {
+  /** unique or primary key constraint */
+  ServiceSectionsPkey = 'service_sections_pkey'
+}
+
+/** input type for inserting data into table "service_sections" */
+export type Service_Sections_Insert_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  service_categories?: InputMaybe<Service_Categories_Arr_Rel_Insert_Input>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Service_Sections_Max_Fields = {
+  __typename?: 'service_sections_max_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Service_Sections_Min_Fields = {
+  __typename?: 'service_sections_min_fields';
+  id?: Maybe<Scalars['uuid']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "service_sections" */
+export type Service_Sections_Mutation_Response = {
+  __typename?: 'service_sections_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Service_Sections>;
+};
+
+/** on conflict condition type for table "service_sections" */
+export type Service_Sections_On_Conflict = {
+  constraint: Service_Sections_Constraint;
+  update_columns?: Array<Service_Sections_Update_Column>;
+  where?: InputMaybe<Service_Sections_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "service_sections". */
+export type Service_Sections_Order_By = {
+  id?: InputMaybe<Order_By>;
+  service_categories_aggregate?: InputMaybe<Service_Categories_Aggregate_Order_By>;
+  title?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: service_sections */
+export type Service_Sections_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "service_sections" */
+export enum Service_Sections_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Title = 'title'
+}
+
+/** input type for updating data in table "service_sections" */
+export type Service_Sections_Set_Input = {
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "service_sections" */
+export enum Service_Sections_Update_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Title = 'title'
+}
+
+/** columns and relationships of "service_subcategories" */
+export type Service_Subcategories = {
+  __typename?: 'service_subcategories';
+  category_id: Scalars['uuid']['output'];
+  description: Scalars['String']['output'];
+  id: Scalars['uuid']['output'];
+  price: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+};
+
+/** aggregated selection of "service_subcategories" */
+export type Service_Subcategories_Aggregate = {
+  __typename?: 'service_subcategories_aggregate';
+  aggregate?: Maybe<Service_Subcategories_Aggregate_Fields>;
+  nodes: Array<Service_Subcategories>;
+};
+
+/** aggregate fields of "service_subcategories" */
+export type Service_Subcategories_Aggregate_Fields = {
+  __typename?: 'service_subcategories_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Service_Subcategories_Max_Fields>;
+  min?: Maybe<Service_Subcategories_Min_Fields>;
+};
+
+
+/** aggregate fields of "service_subcategories" */
+export type Service_Subcategories_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Service_Subcategories_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "service_subcategories" */
+export type Service_Subcategories_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Service_Subcategories_Max_Order_By>;
+  min?: InputMaybe<Service_Subcategories_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "service_subcategories" */
+export type Service_Subcategories_Arr_Rel_Insert_Input = {
+  data: Array<Service_Subcategories_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: InputMaybe<Service_Subcategories_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "service_subcategories". All fields are combined with a logical 'AND'. */
+export type Service_Subcategories_Bool_Exp = {
+  _and?: InputMaybe<Array<Service_Subcategories_Bool_Exp>>;
+  _not?: InputMaybe<Service_Subcategories_Bool_Exp>;
+  _or?: InputMaybe<Array<Service_Subcategories_Bool_Exp>>;
+  category_id?: InputMaybe<Uuid_Comparison_Exp>;
+  description?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  price?: InputMaybe<String_Comparison_Exp>;
+  title?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "service_subcategories" */
+export enum Service_Subcategories_Constraint {
+  /** unique or primary key constraint */
+  ServiceSubcategoriesPkey = 'service_subcategories_pkey'
+}
+
+/** input type for inserting data into table "service_subcategories" */
+export type Service_Subcategories_Insert_Input = {
+  category_id?: InputMaybe<Scalars['uuid']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  price?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Service_Subcategories_Max_Fields = {
+  __typename?: 'service_subcategories_max_fields';
+  category_id?: Maybe<Scalars['uuid']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  price?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by max() on columns of table "service_subcategories" */
+export type Service_Subcategories_Max_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  price?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Service_Subcategories_Min_Fields = {
+  __typename?: 'service_subcategories_min_fields';
+  category_id?: Maybe<Scalars['uuid']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  price?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** order by min() on columns of table "service_subcategories" */
+export type Service_Subcategories_Min_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  price?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "service_subcategories" */
+export type Service_Subcategories_Mutation_Response = {
+  __typename?: 'service_subcategories_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Service_Subcategories>;
+};
+
+/** on conflict condition type for table "service_subcategories" */
+export type Service_Subcategories_On_Conflict = {
+  constraint: Service_Subcategories_Constraint;
+  update_columns?: Array<Service_Subcategories_Update_Column>;
+  where?: InputMaybe<Service_Subcategories_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "service_subcategories". */
+export type Service_Subcategories_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  price?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: service_subcategories */
+export type Service_Subcategories_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "service_subcategories" */
+export enum Service_Subcategories_Select_Column {
+  /** column name */
+  CategoryId = 'category_id',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Price = 'price',
+  /** column name */
+  Title = 'title'
+}
+
+/** input type for updating data in table "service_subcategories" */
+export type Service_Subcategories_Set_Input = {
+  category_id?: InputMaybe<Scalars['uuid']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  price?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "service_subcategories" */
+export enum Service_Subcategories_Update_Column {
+  /** column name */
+  CategoryId = 'category_id',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Price = 'price',
+  /** column name */
+  Title = 'title'
+}
+
+/** columns and relationships of "services" */
+export type Services = {
+  __typename?: 'services';
+  category?: Maybe<Scalars['String']['output']>;
+  description: Scalars['String']['output'];
+  id: Scalars['uuid']['output'];
+  image: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+};
+
+/** aggregated selection of "services" */
+export type Services_Aggregate = {
+  __typename?: 'services_aggregate';
+  aggregate?: Maybe<Services_Aggregate_Fields>;
+  nodes: Array<Services>;
+};
+
+/** aggregate fields of "services" */
+export type Services_Aggregate_Fields = {
+  __typename?: 'services_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Services_Max_Fields>;
+  min?: Maybe<Services_Min_Fields>;
+};
+
+
+/** aggregate fields of "services" */
+export type Services_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Services_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "services". All fields are combined with a logical 'AND'. */
+export type Services_Bool_Exp = {
+  _and?: InputMaybe<Array<Services_Bool_Exp>>;
+  _not?: InputMaybe<Services_Bool_Exp>;
+  _or?: InputMaybe<Array<Services_Bool_Exp>>;
+  category?: InputMaybe<String_Comparison_Exp>;
+  description?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  image?: InputMaybe<String_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "services" */
+export enum Services_Constraint {
+  /** unique or primary key constraint */
+  ServicesPkey = 'services_pkey'
+}
+
+/** input type for inserting data into table "services" */
+export type Services_Insert_Input = {
+  category?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Services_Max_Fields = {
+  __typename?: 'services_max_fields';
+  category?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  image?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Services_Min_Fields = {
+  __typename?: 'services_min_fields';
+  category?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  image?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "services" */
+export type Services_Mutation_Response = {
+  __typename?: 'services_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Services>;
+};
+
+/** on conflict condition type for table "services" */
+export type Services_On_Conflict = {
+  constraint: Services_Constraint;
+  update_columns?: Array<Services_Update_Column>;
+  where?: InputMaybe<Services_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "services". */
+export type Services_Order_By = {
+  category?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  image?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: services */
+export type Services_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "services" */
+export enum Services_Select_Column {
+  /** column name */
+  Category = 'category',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Image = 'image',
+  /** column name */
+  Name = 'name'
+}
+
+/** input type for updating data in table "services" */
+export type Services_Set_Input = {
+  category?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "services" */
+export enum Services_Update_Column {
+  /** column name */
+  Category = 'category',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Image = 'image',
+  /** column name */
+  Name = 'name'
+}
+
 export type Subscription_Root = {
   __typename?: 'subscription_root';
   /** fetch data from the table: "admin" */
@@ -4881,39 +5887,41 @@ export type Subscription_Root = {
   admin_aggregate: Admin_Aggregate;
   /** fetch data from the table: "admin" using primary key columns */
   admin_by_pk?: Maybe<Admin>;
-  /** fetch data from the table in a streaming manner: "admin" */
-  admin_stream: Array<Admin>;
   /** fetch data from the table: "advantages" */
   advantages: Array<Advantages>;
   /** fetch aggregated fields from the table: "advantages" */
   advantages_aggregate: Advantages_Aggregate;
   /** fetch data from the table: "advantages" using primary key columns */
   advantages_by_pk?: Maybe<Advantages>;
-  /** fetch data from the table in a streaming manner: "advantages" */
-  advantages_stream: Array<Advantages>;
   /** fetch data from the table: "customers" */
   customers: Array<Customers>;
   /** fetch aggregated fields from the table: "customers" */
   customers_aggregate: Customers_Aggregate;
   /** fetch data from the table: "customers" using primary key columns */
   customers_by_pk?: Maybe<Customers>;
-  /** fetch data from the table in a streaming manner: "customers" */
-  customers_stream: Array<Customers>;
+  /** fetch data from the table: "form_services" */
+  form_services: Array<Form_Services>;
+  /** fetch aggregated fields from the table: "form_services" */
+  form_services_aggregate: Form_Services_Aggregate;
+  /** fetch data from the table: "form_services" using primary key columns */
+  form_services_by_pk?: Maybe<Form_Services>;
   /** fetch data from the table: "last_week_orders" */
   last_week_orders: Array<Last_Week_Orders>;
   /** fetch aggregated fields from the table: "last_week_orders" */
   last_week_orders_aggregate: Last_Week_Orders_Aggregate;
-  /** fetch data from the table in a streaming manner: "last_week_orders" */
-  last_week_orders_stream: Array<Last_Week_Orders>;
+  /** fetch data from the table: "main_services" */
+  main_services: Array<Main_Services>;
+  /** fetch aggregated fields from the table: "main_services" */
+  main_services_aggregate: Main_Services_Aggregate;
+  /** fetch data from the table: "main_services" using primary key columns */
+  main_services_by_pk?: Maybe<Main_Services>;
   /** fetch data from the table: "order_status" */
   order_status: Array<Order_Status>;
   /** fetch aggregated fields from the table: "order_status" */
   order_status_aggregate: Order_Status_Aggregate;
   /** fetch data from the table: "order_status" using primary key columns */
   order_status_by_pk?: Maybe<Order_Status>;
-  /** fetch data from the table in a streaming manner: "order_status" */
-  order_status_stream: Array<Order_Status>;
-  /** An array relationship */
+  /** fetch data from the table: "orders" */
   orders: Array<Orders>;
   /** An aggregate relationship */
   orders_aggregate: Orders_Aggregate;
@@ -4925,26 +5933,18 @@ export type Subscription_Root = {
   orders_products_aggregate: Orders_Products_Aggregate;
   /** fetch data from the table: "orders_products" using primary key columns */
   orders_products_by_pk?: Maybe<Orders_Products>;
-  /** fetch data from the table in a streaming manner: "orders_products" */
-  orders_products_stream: Array<Orders_Products>;
-  /** fetch data from the table in a streaming manner: "orders" */
-  orders_stream: Array<Orders>;
   /** fetch data from the table: "payment_status" */
   payment_status: Array<Payment_Status>;
   /** fetch aggregated fields from the table: "payment_status" */
   payment_status_aggregate: Payment_Status_Aggregate;
   /** fetch data from the table: "payment_status" using primary key columns */
   payment_status_by_pk?: Maybe<Payment_Status>;
-  /** fetch data from the table in a streaming manner: "payment_status" */
-  payment_status_stream: Array<Payment_Status>;
   /** fetch data from the table: "payment_types" */
   payment_types: Array<Payment_Types>;
   /** fetch aggregated fields from the table: "payment_types" */
   payment_types_aggregate: Payment_Types_Aggregate;
   /** fetch data from the table: "payment_types" using primary key columns */
   payment_types_by_pk?: Maybe<Payment_Types>;
-  /** fetch data from the table in a streaming manner: "payment_types" */
-  payment_types_stream: Array<Payment_Types>;
   /** fetch data from the table: "personnel" */
   personnel: Array<Personnel>;
   /** fetch aggregated fields from the table: "personnel" */
@@ -4957,10 +5957,6 @@ export type Subscription_Root = {
   personnel_categories_aggregate: Personnel_Categories_Aggregate;
   /** fetch data from the table: "personnel_categories" using primary key columns */
   personnel_categories_by_pk?: Maybe<Personnel_Categories>;
-  /** fetch data from the table in a streaming manner: "personnel_categories" */
-  personnel_categories_stream: Array<Personnel_Categories>;
-  /** fetch data from the table in a streaming manner: "personnel" */
-  personnel_stream: Array<Personnel>;
   /** fetch data from the table: "price_list" */
   price_list: Array<Price_List>;
   /** fetch aggregated fields from the table: "price_list" */
@@ -4973,10 +5969,6 @@ export type Subscription_Root = {
   price_list_categories_aggregate: Price_List_Categories_Aggregate;
   /** fetch data from the table: "price_list_categories" using primary key columns */
   price_list_categories_by_pk?: Maybe<Price_List_Categories>;
-  /** fetch data from the table in a streaming manner: "price_list_categories" */
-  price_list_categories_stream: Array<Price_List_Categories>;
-  /** fetch data from the table in a streaming manner: "price_list" */
-  price_list_stream: Array<Price_List>;
   /** fetch data from the table: "products" */
   products: Array<Products>;
   /** fetch aggregated fields from the table: "products" */
@@ -4989,10 +5981,30 @@ export type Subscription_Root = {
   products_categories_aggregate: Products_Categories_Aggregate;
   /** fetch data from the table: "products_categories" using primary key columns */
   products_categories_by_pk?: Maybe<Products_Categories>;
-  /** fetch data from the table in a streaming manner: "products_categories" */
-  products_categories_stream: Array<Products_Categories>;
-  /** fetch data from the table in a streaming manner: "products" */
-  products_stream: Array<Products>;
+  /** fetch data from the table: "service_categories" */
+  service_categories: Array<Service_Categories>;
+  /** fetch aggregated fields from the table: "service_categories" */
+  service_categories_aggregate: Service_Categories_Aggregate;
+  /** fetch data from the table: "service_categories" using primary key columns */
+  service_categories_by_pk?: Maybe<Service_Categories>;
+  /** fetch data from the table: "service_sections" */
+  service_sections: Array<Service_Sections>;
+  /** fetch aggregated fields from the table: "service_sections" */
+  service_sections_aggregate: Service_Sections_Aggregate;
+  /** fetch data from the table: "service_sections" using primary key columns */
+  service_sections_by_pk?: Maybe<Service_Sections>;
+  /** An array relationship */
+  service_subcategories: Array<Service_Subcategories>;
+  /** An aggregate relationship */
+  service_subcategories_aggregate: Service_Subcategories_Aggregate;
+  /** fetch data from the table: "service_subcategories" using primary key columns */
+  service_subcategories_by_pk?: Maybe<Service_Subcategories>;
+  /** fetch data from the table: "services" */
+  services: Array<Services>;
+  /** fetch aggregated fields from the table: "services" */
+  services_aggregate: Services_Aggregate;
+  /** fetch data from the table: "services" using primary key columns */
+  services_by_pk?: Maybe<Services>;
 };
 
 
@@ -5019,13 +6031,6 @@ export type Subscription_RootAdmin_By_PkArgs = {
 };
 
 
-export type Subscription_RootAdmin_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Admin_Stream_Cursor_Input>>;
-  where?: InputMaybe<Admin_Bool_Exp>;
-};
-
-
 export type Subscription_RootAdvantagesArgs = {
   distinct_on?: InputMaybe<Array<Advantages_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5046,13 +6051,6 @@ export type Subscription_RootAdvantages_AggregateArgs = {
 
 export type Subscription_RootAdvantages_By_PkArgs = {
   id: Scalars['uuid']['input'];
-};
-
-
-export type Subscription_RootAdvantages_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Advantages_Stream_Cursor_Input>>;
-  where?: InputMaybe<Advantages_Bool_Exp>;
 };
 
 
@@ -5079,10 +6077,26 @@ export type Subscription_RootCustomers_By_PkArgs = {
 };
 
 
-export type Subscription_RootCustomers_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Customers_Stream_Cursor_Input>>;
-  where?: InputMaybe<Customers_Bool_Exp>;
+export type Subscription_RootForm_ServicesArgs = {
+  distinct_on?: InputMaybe<Array<Form_Services_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Form_Services_Order_By>>;
+  where?: InputMaybe<Form_Services_Bool_Exp>;
+};
+
+
+export type Subscription_RootForm_Services_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Form_Services_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Form_Services_Order_By>>;
+  where?: InputMaybe<Form_Services_Bool_Exp>;
+};
+
+
+export type Subscription_RootForm_Services_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -5104,10 +6118,26 @@ export type Subscription_RootLast_Week_Orders_AggregateArgs = {
 };
 
 
-export type Subscription_RootLast_Week_Orders_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Last_Week_Orders_Stream_Cursor_Input>>;
-  where?: InputMaybe<Last_Week_Orders_Bool_Exp>;
+export type Subscription_RootMain_ServicesArgs = {
+  distinct_on?: InputMaybe<Array<Main_Services_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Main_Services_Order_By>>;
+  where?: InputMaybe<Main_Services_Bool_Exp>;
+};
+
+
+export type Subscription_RootMain_Services_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Main_Services_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Main_Services_Order_By>>;
+  where?: InputMaybe<Main_Services_Bool_Exp>;
+};
+
+
+export type Subscription_RootMain_Services_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -5131,13 +6161,6 @@ export type Subscription_RootOrder_Status_AggregateArgs = {
 
 export type Subscription_RootOrder_Status_By_PkArgs = {
   id: Scalars['String']['input'];
-};
-
-
-export type Subscription_RootOrder_Status_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Order_Status_Stream_Cursor_Input>>;
-  where?: InputMaybe<Order_Status_Bool_Exp>;
 };
 
 
@@ -5187,20 +6210,6 @@ export type Subscription_RootOrders_Products_By_PkArgs = {
 };
 
 
-export type Subscription_RootOrders_Products_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Orders_Products_Stream_Cursor_Input>>;
-  where?: InputMaybe<Orders_Products_Bool_Exp>;
-};
-
-
-export type Subscription_RootOrders_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Orders_Stream_Cursor_Input>>;
-  where?: InputMaybe<Orders_Bool_Exp>;
-};
-
-
 export type Subscription_RootPayment_StatusArgs = {
   distinct_on?: InputMaybe<Array<Payment_Status_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5224,13 +6233,6 @@ export type Subscription_RootPayment_Status_By_PkArgs = {
 };
 
 
-export type Subscription_RootPayment_Status_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Payment_Status_Stream_Cursor_Input>>;
-  where?: InputMaybe<Payment_Status_Bool_Exp>;
-};
-
-
 export type Subscription_RootPayment_TypesArgs = {
   distinct_on?: InputMaybe<Array<Payment_Types_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5251,13 +6253,6 @@ export type Subscription_RootPayment_Types_AggregateArgs = {
 
 export type Subscription_RootPayment_Types_By_PkArgs = {
   id: Scalars['String']['input'];
-};
-
-
-export type Subscription_RootPayment_Types_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Payment_Types_Stream_Cursor_Input>>;
-  where?: InputMaybe<Payment_Types_Bool_Exp>;
 };
 
 
@@ -5307,20 +6302,6 @@ export type Subscription_RootPersonnel_Categories_By_PkArgs = {
 };
 
 
-export type Subscription_RootPersonnel_Categories_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Personnel_Categories_Stream_Cursor_Input>>;
-  where?: InputMaybe<Personnel_Categories_Bool_Exp>;
-};
-
-
-export type Subscription_RootPersonnel_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Personnel_Stream_Cursor_Input>>;
-  where?: InputMaybe<Personnel_Bool_Exp>;
-};
-
-
 export type Subscription_RootPrice_ListArgs = {
   distinct_on?: InputMaybe<Array<Price_List_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -5364,20 +6345,6 @@ export type Subscription_RootPrice_List_Categories_AggregateArgs = {
 
 export type Subscription_RootPrice_List_Categories_By_PkArgs = {
   id: Scalars['uuid']['input'];
-};
-
-
-export type Subscription_RootPrice_List_Categories_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Price_List_Categories_Stream_Cursor_Input>>;
-  where?: InputMaybe<Price_List_Categories_Bool_Exp>;
-};
-
-
-export type Subscription_RootPrice_List_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Price_List_Stream_Cursor_Input>>;
-  where?: InputMaybe<Price_List_Bool_Exp>;
 };
 
 
@@ -5427,17 +6394,95 @@ export type Subscription_RootProducts_Categories_By_PkArgs = {
 };
 
 
-export type Subscription_RootProducts_Categories_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Products_Categories_Stream_Cursor_Input>>;
-  where?: InputMaybe<Products_Categories_Bool_Exp>;
+export type Subscription_RootService_CategoriesArgs = {
+  distinct_on?: InputMaybe<Array<Service_Categories_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Service_Categories_Order_By>>;
+  where?: InputMaybe<Service_Categories_Bool_Exp>;
 };
 
 
-export type Subscription_RootProducts_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Products_Stream_Cursor_Input>>;
-  where?: InputMaybe<Products_Bool_Exp>;
+export type Subscription_RootService_Categories_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Service_Categories_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Service_Categories_Order_By>>;
+  where?: InputMaybe<Service_Categories_Bool_Exp>;
+};
+
+
+export type Subscription_RootService_Categories_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootService_SectionsArgs = {
+  distinct_on?: InputMaybe<Array<Service_Sections_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Service_Sections_Order_By>>;
+  where?: InputMaybe<Service_Sections_Bool_Exp>;
+};
+
+
+export type Subscription_RootService_Sections_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Service_Sections_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Service_Sections_Order_By>>;
+  where?: InputMaybe<Service_Sections_Bool_Exp>;
+};
+
+
+export type Subscription_RootService_Sections_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootService_SubcategoriesArgs = {
+  distinct_on?: InputMaybe<Array<Service_Subcategories_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Service_Subcategories_Order_By>>;
+  where?: InputMaybe<Service_Subcategories_Bool_Exp>;
+};
+
+
+export type Subscription_RootService_Subcategories_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Service_Subcategories_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Service_Subcategories_Order_By>>;
+  where?: InputMaybe<Service_Subcategories_Bool_Exp>;
+};
+
+
+export type Subscription_RootService_Subcategories_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootServicesArgs = {
+  distinct_on?: InputMaybe<Array<Services_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Services_Order_By>>;
+  where?: InputMaybe<Services_Bool_Exp>;
+};
+
+
+export type Subscription_RootServices_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Services_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Services_Order_By>>;
+  where?: InputMaybe<Services_Bool_Exp>;
+};
+
+
+export type Subscription_RootServices_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */

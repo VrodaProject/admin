@@ -1,6 +1,6 @@
 overwrite: true
 schema:
-  - http://localhost:8081/v1/graphql:
+  - http://localhost:9695/v1/graphql:
       headers:
         x-hasura-admin-secret: mydminsecretkeyvroda
 documents: src/core/graphql/*.gql

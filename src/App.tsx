@@ -19,6 +19,9 @@ import { servicesResource } from "./modules/services/services.resource";
 import { formServicesResource } from "./modules/form_services/form-services.resource";
 import { config } from "./core/config";
 import { mainServicesResource } from "./modules/main_services/main-services.resource";
+import { pageServicesResource } from "./modules/services-page/services-page.resource";
+import { pageServicesCategoryResource } from "./modules/services-page-category/services-page.resource";
+import { pageServiceSubcategoriesResource } from "./modules/services-page-subcategory/services-page.resource";
 
 export const App = () => {
   const [dataProvider, setDataProvider] = useState<DataProvider<string> | null>(
@@ -63,6 +66,9 @@ export const App = () => {
         <Resource {...customerResource} />
         <Resource {...formServicesResource} />
         <Resource {...mainServicesResource} />
+        <Resource {...pageServicesResource} />
+        <Resource {...pageServicesCategoryResource} />
+        <Resource {...pageServiceSubcategoriesResource} />
 
         <Resource name="order_status" />
         <Resource name="orders_products" />
