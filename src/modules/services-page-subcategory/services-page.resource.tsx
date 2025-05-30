@@ -8,6 +8,6 @@ export const pageServiceSubcategoriesResource = {
   list: ServiceSubcategoriesList,
   edit: ServiceSubcategoriesEdit,
   create: ServiceSubcategoriesCreate,
-  options: { label: "Сторінка послуг – підкатегорії" },
+  options: { label: "Послуги – підкатегорії" },
   icon: FaceRetouchingNaturalIcon,
 };

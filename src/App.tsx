@@ -22,7 +22,6 @@ import { mainServicesResource } from "./modules/main_services/main-services.reso
 import { pageServicesResource } from "./modules/services-page/services-page.resource";
 import { pageServicesCategoryResource } from "./modules/services-page-category/services-page.resource";
 import { pageServiceSubcategoriesResource } from "./modules/services-page-subcategory/services-page.resource";
-
 export const App = () => {
   const [dataProvider, setDataProvider] = useState<DataProvider<string> | null>(
     null
