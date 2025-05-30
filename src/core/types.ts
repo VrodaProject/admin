@@ -4701,7 +4701,7 @@ export type Query_Root = {
   products_categories_by_pk?: Maybe<Products_Categories>;
   /** fetch data from the table: "service_categories" */
   service_categories: Array<Service_Categories>;
-  /** fetch aggregated fields from the table: "service_categories" */
+  /** An aggregate relationship */
   service_categories_aggregate: Service_Categories_Aggregate;
   /** fetch data from the table: "service_categories" using primary key columns */
   service_categories_by_pk?: Maybe<Service_Categories>;
@@ -5229,6 +5229,8 @@ export type Service_Categories = {
   id: Scalars['uuid']['output'];
   preview: Scalars['String']['output'];
   section_id: Scalars['uuid']['output'];
+  /** An object relationship */
+  service_section: Service_Sections;
   /** An array relationship */
   service_subcategories: Array<Service_Subcategories>;
   /** An aggregate relationship */
@@ -5300,6 +5302,7 @@ export type Service_Categories_Bool_Exp = {
   id?: InputMaybe<Uuid_Comparison_Exp>;
   preview?: InputMaybe<String_Comparison_Exp>;
   section_id?: InputMaybe<Uuid_Comparison_Exp>;
+  service_section?: InputMaybe<Service_Sections_Bool_Exp>;
   service_subcategories?: InputMaybe<Service_Subcategories_Bool_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
 };
@@ -5315,6 +5318,7 @@ export type Service_Categories_Insert_Input = {
   id?: InputMaybe<Scalars['uuid']['input']>;
   preview?: InputMaybe<Scalars['String']['input']>;
   section_id?: InputMaybe<Scalars['uuid']['input']>;
+  service_section?: InputMaybe<Service_Sections_Obj_Rel_Insert_Input>;
   service_subcategories?: InputMaybe<Service_Subcategories_Arr_Rel_Insert_Input>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
@@ -5362,6 +5366,13 @@ export type Service_Categories_Mutation_Response = {
   returning: Array<Service_Categories>;
 };
 
+/** input type for inserting object relation for remote table "service_categories" */
+export type Service_Categories_Obj_Rel_Insert_Input = {
+  data: Service_Categories_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: InputMaybe<Service_Categories_On_Conflict>;
+};
+
 /** on conflict condition type for table "service_categories" */
 export type Service_Categories_On_Conflict = {
   constraint: Service_Categories_Constraint;
@@ -5374,6 +5385,7 @@ export type Service_Categories_Order_By = {
   id?: InputMaybe<Order_By>;
   preview?: InputMaybe<Order_By>;
   section_id?: InputMaybe<Order_By>;
+  service_section?: InputMaybe<Service_Sections_Order_By>;
   service_subcategories_aggregate?: InputMaybe<Service_Subcategories_Aggregate_Order_By>;
   title?: InputMaybe<Order_By>;
 };
@@ -5419,11 +5431,35 @@ export enum Service_Categories_Update_Column {
 export type Service_Sections = {
   __typename?: 'service_sections';
   id: Scalars['uuid']['output'];
+  /** An array relationship */
+  relationship_service_categories: Array<Service_Categories>;
+  /** An aggregate relationship */
+  relationship_service_categories_aggregate: Service_Categories_Aggregate;
   /** fetch data from the table: "service_categories" */
   service_categories: Array<Service_Categories>;
-  /** fetch aggregated fields from the table: "service_categories" */
+  /** An aggregate relationship */
   service_categories_aggregate: Service_Categories_Aggregate;
   title: Scalars['String']['output'];
+};
+
+
+/** columns and relationships of "service_sections" */
+export type Service_SectionsRelationship_Service_CategoriesArgs = {
+  distinct_on?: InputMaybe<Array<Service_Categories_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Service_Categories_Order_By>>;
+  where?: InputMaybe<Service_Categories_Bool_Exp>;
+};
+
+
+/** columns and relationships of "service_sections" */
+export type Service_SectionsRelationship_Service_Categories_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Service_Categories_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Service_Categories_Order_By>>;
+  where?: InputMaybe<Service_Categories_Bool_Exp>;
 };
 
 
@@ -5474,6 +5510,7 @@ export type Service_Sections_Bool_Exp = {
   _not?: InputMaybe<Service_Sections_Bool_Exp>;
   _or?: InputMaybe<Array<Service_Sections_Bool_Exp>>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  relationship_service_categories?: InputMaybe<Service_Categories_Bool_Exp>;
   service_categories?: InputMaybe<Service_Categories_Bool_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
 };
@@ -5487,6 +5524,7 @@ export enum Service_Sections_Constraint {
 /** input type for inserting data into table "service_sections" */
 export type Service_Sections_Insert_Input = {
   id?: InputMaybe<Scalars['uuid']['input']>;
+  relationship_service_categories?: InputMaybe<Service_Categories_Arr_Rel_Insert_Input>;
   service_categories?: InputMaybe<Service_Categories_Arr_Rel_Insert_Input>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
@@ -5514,6 +5552,13 @@ export type Service_Sections_Mutation_Response = {
   returning: Array<Service_Sections>;
 };
 
+/** input type for inserting object relation for remote table "service_sections" */
+export type Service_Sections_Obj_Rel_Insert_Input = {
+  data: Service_Sections_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: InputMaybe<Service_Sections_On_Conflict>;
+};
+
 /** on conflict condition type for table "service_sections" */
 export type Service_Sections_On_Conflict = {
   constraint: Service_Sections_Constraint;
@@ -5524,6 +5569,7 @@ export type Service_Sections_On_Conflict = {
 /** Ordering options when selecting data from "service_sections". */
 export type Service_Sections_Order_By = {
   id?: InputMaybe<Order_By>;
+  relationship_service_categories_aggregate?: InputMaybe<Service_Categories_Aggregate_Order_By>;
   service_categories_aggregate?: InputMaybe<Service_Categories_Aggregate_Order_By>;
   title?: InputMaybe<Order_By>;
 };
@@ -5562,6 +5608,9 @@ export type Service_Subcategories = {
   description: Scalars['String']['output'];
   id: Scalars['uuid']['output'];
   price: Scalars['String']['output'];
+  /** An object relationship */
+  service_category: Service_Categories;
+  subtitle?: Maybe<Scalars['String']['output']>;
   title: Scalars['String']['output'];
 };
 
@@ -5610,6 +5659,8 @@ export type Service_Subcategories_Bool_Exp = {
   description?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   price?: InputMaybe<String_Comparison_Exp>;
+  service_category?: InputMaybe<Service_Categories_Bool_Exp>;
+  subtitle?: InputMaybe<String_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
 };
 
@@ -5625,6 +5676,8 @@ export type Service_Subcategories_Insert_Input = {
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   price?: InputMaybe<Scalars['String']['input']>;
+  service_category?: InputMaybe<Service_Categories_Obj_Rel_Insert_Input>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -5635,6 +5688,7 @@ export type Service_Subcategories_Max_Fields = {
   description?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   price?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -5644,6 +5698,7 @@ export type Service_Subcategories_Max_Order_By = {
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   price?: InputMaybe<Order_By>;
+  subtitle?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
 };
 
@@ -5654,6 +5709,7 @@ export type Service_Subcategories_Min_Fields = {
   description?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   price?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -5663,6 +5719,7 @@ export type Service_Subcategories_Min_Order_By = {
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   price?: InputMaybe<Order_By>;
+  subtitle?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
 };
 
@@ -5688,6 +5745,8 @@ export type Service_Subcategories_Order_By = {
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   price?: InputMaybe<Order_By>;
+  service_category?: InputMaybe<Service_Categories_Order_By>;
+  subtitle?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
 };
 
@@ -5707,6 +5766,8 @@ export enum Service_Subcategories_Select_Column {
   /** column name */
   Price = 'price',
   /** column name */
+  Subtitle = 'subtitle',
+  /** column name */
   Title = 'title'
 }
 
@@ -5716,6 +5777,7 @@ export type Service_Subcategories_Set_Input = {
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   price?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -5729,6 +5791,8 @@ export enum Service_Subcategories_Update_Column {
   Id = 'id',
   /** column name */
   Price = 'price',
+  /** column name */
+  Subtitle = 'subtitle',
   /** column name */
   Title = 'title'
 }
@@ -5983,7 +6047,7 @@ export type Subscription_Root = {
   products_categories_by_pk?: Maybe<Products_Categories>;
   /** fetch data from the table: "service_categories" */
   service_categories: Array<Service_Categories>;
-  /** fetch aggregated fields from the table: "service_categories" */
+  /** An aggregate relationship */
   service_categories_aggregate: Service_Categories_Aggregate;
   /** fetch data from the table: "service_categories" using primary key columns */
   service_categories_by_pk?: Maybe<Service_Categories>;

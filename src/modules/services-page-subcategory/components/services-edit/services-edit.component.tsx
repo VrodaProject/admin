@@ -5,6 +5,7 @@ export const ServiceSubcategoriesEdit = () => (
   <Edit title={<CustomTitle source="title" />}>
     <SimpleForm>
       <TextInput source="title" fullWidth label="Назва підкатегорії" />
+      <TextInput source="subtitle" fullWidth label="Підзаголовок" />
       <TextInput source="price" fullWidth label="Ціна" />
       <TextInput source="description" fullWidth label="Опис" multiline />
       <ReferenceInput
