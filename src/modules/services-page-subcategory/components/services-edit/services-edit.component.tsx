@@ -12,6 +12,7 @@ export const ServiceSubcategoriesEdit = () => (
         source="category_id"
         reference="service_categories"
         label="Категорія"
+        perPage={500}
       >
         <SelectInput optionText="title" />
       </ReferenceInput>
